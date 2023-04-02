@@ -1,5 +1,7 @@
 package com.bearbikes.maintenance_support.bdd;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,6 +10,7 @@ import java.sql.SQLException;
  * Clase creada con el patron singlenton para obtener una connección con la
  * base de datos en mysql
  */
+@Component
 public class BaseDeDatos {
     private static final String NOMBRE_BDD = "pruebas";
     private static final String PUERTO_BDD = "3308";

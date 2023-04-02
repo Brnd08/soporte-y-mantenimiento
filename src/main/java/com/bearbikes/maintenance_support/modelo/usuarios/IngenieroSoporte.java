@@ -1,5 +1,8 @@
 package com.bearbikes.maintenance_support.modelo.usuarios;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class IngenieroSoporte extends Usuario{
 
     public IngenieroSoporte(String email, String contraseña, String nombre){

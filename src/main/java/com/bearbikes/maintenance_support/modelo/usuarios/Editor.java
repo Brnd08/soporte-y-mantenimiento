@@ -3,15 +3,15 @@ package com.bearbikes.maintenance_support.modelo.usuarios;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class GerenteMantenimiento extends Usuario{
+public class Editor extends Usuario{
 
-    public GerenteMantenimiento(String email, String contraseña, String nombre){
-        super(email, contraseña, nombre, TipoUsuario.GERENTE_MANTENIMIENTO);
+    public Editor(String email, String contraseña, String nombre){
+        super(email, contraseña, nombre, TipoUsuario.EDITOR);
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("GerenteMantenimiento{");
+        final StringBuilder sb = new StringBuilder("Editor{");
         sb.append("id=").append(id);
         sb.append(", email='").append(email).append('\'');
         sb.append(", contraseña='").append(contraseña).append('\'');

@@ -9,10 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-/**
+/*
  * Clase padre de la cual heredan todos los usuarios;
  */
-
 public abstract class Usuario {
     protected int id;
     protected String email;

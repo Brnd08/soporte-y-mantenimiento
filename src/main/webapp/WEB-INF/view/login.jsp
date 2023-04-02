@@ -1,7 +1,31 @@
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.stream.Collectors" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <%
+    Object sesionActiva = request.getAttribute("sesion activa");
+    if (sesionActiva != null)
+        if((boolean)sesionActiva)
+            response.sendRedirect("/dashboard");
+        else{
+            response.sendRedirect("/login");
+        }
+
+    String mensajeError = (String) request.getAttribute("Mensaje de Error");
+
+    String plantillaMensajeError =
+                    "                   <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>\n" +
+                    "                        <symbol id='exclamation-triangle-fill' viewBox='0 0 16 16'>\n" +
+                    "                            <path d='M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z'/>\n" +
+                    "                        </symbol>\n" +
+                    "                   </svg>\n" +
+                    "                   <div class='alert alert-danger d-flex align-items-center ' role='alert'>\n" +
+                    "                        <svg class='bi flex-shrink-0 me-2' role='img' aria-label='Danger:' style='height: 1em; width: 1em'>\n" +
+                    "                            <use xlink:href='#exclamation-triangle-fill'/>\n" +
+                    "                        </svg>\n" +
+                    "                        <div>$ContenidoMensaje</div>\n" +
+                    "                   </div>";
 
 %>
 <html lang="es">
@@ -32,12 +56,17 @@
     </header>
 </div>
 
-<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+<div class="container col-xl-10 col-xxl-8 px-4 py-5" style="padding-top: .8rem!important;">
     <div class="row align-items-center g-lg-5 py-5">
         <div class="col-lg-7 text-center text-lg-start">
             <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">Inicia Sesión en tu Cuenta</h1>
             <p class="col-lg-10 fs-4">Debemos verificar tu sesión antes de continuar. Usa las credenciales que te fueron
                 anteriormente proporcionadas</p>
+            <%
+                if (mensajeError != null) {
+                    out.print(plantillaMensajeError.replace("$ContenidoMensaje", mensajeError));
+                }
+            %>
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
             <form method="post" action="" class="p-4 p-md-5 border rounded-3 bg-body-tertiary was-validated">
@@ -57,9 +86,6 @@
                         Proporciona tu contraseña
                     </div>
                 </div>
-                <c:if test="${resultados}">
-                    <div>Este elemento HTML se mostrará si miVariable está presente en el modelo</div>
-                </c:if>
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
                 <hr class="my-4">
                 <small class="text-body-secondary">By clicking Sign up, you agree to the terms of use.</small>
@@ -70,3 +96,6 @@
 <script src="../../bootstrap/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<%
+%>
