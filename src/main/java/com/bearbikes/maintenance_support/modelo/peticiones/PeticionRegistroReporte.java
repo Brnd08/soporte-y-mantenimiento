@@ -1,6 +1,5 @@
 package com.bearbikes.maintenance_support.modelo.peticiones;
 
-import com.bearbikes.maintenance_support.modelo.Reporte;
 
-public record PeticionRegistroReporte(String emailUsuario, String nombreReporte, Reporte.TipoReporte tipoReporte, String preguntaReporte) {
+public record PeticionRegistroReporte(String email, String nombre, String tipoReporte, String pregunta) {
 }

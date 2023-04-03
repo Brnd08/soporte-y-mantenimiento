@@ -6,17 +6,17 @@
         <%-- ---------------------------------- CHECKBOX AUTOASIGNAR----------------------------------------------------%>
         <div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="usuarioAsignado" id="autoAsignarse" checked>
-                <label class="form-check-label" for="autoAsignarse">Autoasignarse Reporte</label>
+                <input class="form-check-input" type="radio" name="gerenteMantenimientoAsignado" id="autoAsignarseGerenteMantenimeinto" checked>
+                <label class="form-check-label" for="autoAsignarseGerenteMantenimeinto">Autoasignarse Reporte</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="usuarioAsignado" id="asignarOtro">
-                <label class="form-check-label" for="asignarOtro">Asignar a otro usuario</label>
+                <input class="form-check-input" type="radio" name="gerenteMantenimientoAsignado" id="asignarGerenteMantenimiento">
+                <label class="form-check-label" for="asignarGerenteMantenimiento">Asignar Gerente Mantenimiento</label>
             </div>
         </div>
         <%-- ---------------------------------- CHECKBOX USUARIO A ASIGNAR ----------------------------------------------------%>
 
-        <div id="divUsuarioAsignar" class="form-floating mb-3" style="display: none">
+        <div id="divGerenteMantenimientoAsignar" class="form-floating mb-3" style="display: none">
             <select name="tipoReporte" id="gerenteAsignado" class="form-control"
                     placeholder="Reporte formulario index" required>
                 <option disabled>SELECCIONA EL USUARIO A ASIGNAR</option>
@@ -44,24 +44,26 @@
         </div>
 
             <script>
-                const checkboxAsignarOtro = document.getElementById("asignarOtro");
-                const checkboxAutoAsignar = document.getElementById("autoAsignarse");
-                const divUsuarioAsignar = document.getElementById("divUsuarioAsignar");
-                const usuarioAsignado = document.getElementById("usuarioAsignado");
+                const asignarGerenteMantenimiento = document.getElementById("asignarGerenteMantenimiento");
+                const autoAsignarseGerenteMantenimeinto = document.getElementById("autoAsignarseGerenteMantenimeinto");
+                const divGerenteMantenimientoAsignar = document.getElementById("divGerenteMantenimientoAsignar");
+                const gerenteMantenimientoAsignado = document.getElementById("gerenteMantenimientoAsignado");
 
-                checkboxAsignarOtro.addEventListener("change", ev => {
-                    divUsuarioAsignar.style.display = 'inherit'
-                    usuarioAsignado.disabled = false;
+                asignarGerenteMantenimiento.addEventListener("change", ev => {
+                    console.log("mostrar");
+                    divGerenteMantenimientoAsignar.style.display = 'inherit';
+                    gerenteMantenimientoAsignado.disabled = false;
                 })
-                checkboxAutoAsignar.addEventListener("change", ev => {
-                    divUsuarioAsignar.style.display = 'none'
-                    usuarioAsignado.disabled = true;
+                autoAsignarseGerenteMantenimeinto.addEventListener("change", ev => {
+                    console.log("no mostrar");
+                    divGerenteMantenimientoAsignar.style.display = 'none';
+                    gerenteMantenimientoAsignado.disabled = true;
                 })
             </script>
 
         <%-- ---------------------------------- SCRIPT OCULTAR CHECKBOX ----------------------------------------------------%>
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Añadir reporte</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Asignar Gerente Mantenimiento</button>
 
     </form>
 </div>

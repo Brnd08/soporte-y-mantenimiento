@@ -20,6 +20,14 @@ public class RepositorioUsuarios {
     }
 
 
+    public List<Usuario> obtenerPorTipoUsuario(Usuario.TipoUsuario tipo) throws SQLException {
+        String sql = "select * from usuarios WHERE tipo_usuario = (?);";
+        PreparedStatement preparedStatement= connectionBdd.prepareStatement(sql);
+        preparedStatement.setString(1, tipo.name());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return MapeadorUsuarios.mapearUsuarios(resultSet);
+    }
+
 
     public Usuario iniciarSesion(String email, String password) throws SQLException {
         String sentenciaLogin = "SELECT * FROM usuarios WHERE email_usuario = (?) AND password_usuario = (?);";

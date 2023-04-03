@@ -3,12 +3,14 @@ package com.bearbikes.maintenance_support.modelo.usuarios;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 /*
  * Clase padre de la cual heredan todos los usuarios;
  */
@@ -25,6 +27,13 @@ public abstract class Usuario {
         this.contraseña = contraseña;
         this.nombre = nombre;
         this.tipoUsuario = tipoUsuario;
+    }
+    public String toStringMostrar() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("email='").append(email).append('\'');
+        sb.append(", nombre='").append(nombre).append('\'');
+        sb.append(", tipoUsuario=").append(tipoUsuario);
+        return sb.toString();
     }
 
     /**

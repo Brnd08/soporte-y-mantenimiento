@@ -1,29 +1,29 @@
 ﻿<%-- ---------------------------------- FORMULARIO ASIGNAR INGENIEBRIO----------------------------------------------------%>
-<h2>Asignar a ingeniero soporte</h2>
+<h2>Asignar a ingeniero Mantenimiento</h2>
 <div class="col-md-10 mx-auto col-lg-10">
     <form method="post" action="/asignar-ingenierio-soporte"
           class="p-4 p-md-5 border rounded-3 bg-body-tertiary was-validated">
         <%-- ---------------------------------- CHECKBOX AUTOASIGNAR----------------------------------------------------%>
         <div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="usuarioAsignado" id="autoAsignarse" checked>
-                <label class="form-check-label" for="autoAsignarse">Autoasignarse Reporte</label>
+                <input class="form-check-input" type="radio" name="usuarioAsignado" id="autoAsignarseIngenieroMantenimiento" checked>
+                <label class="form-check-label" for="autoAsignarseIngenieroMantenimiento">Autoasignarse Reporte</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="usuarioAsignado" id="asignarOtro">
-                <label class="form-check-label" for="asignarOtro">Asignar a otro usuario</label>
+                <input class="form-check-input" type="radio" name="usuarioAsignado" id="asignarOtroMantenimientoIngenieroMantenimiento">
+                <label class="form-check-label" for="asignarOtroMantenimientoIngenieroMantenimiento">Asignar a otro usuario</label>
             </div>
         </div>
         <%-- ---------------------------------- CHECKBOX USUARIO A ASIGNAR ----------------------------------------------------%>
 
-        <div id="divUsuarioAsignar" class="form-floating mb-3" style="display: none">
-            <select name="tipoReporte" id="usuarioAsignado" class="form-control"
+        <div id="divUsuarioAsignarIngenieroMantenimiento" class="form-floating mb-3" style="display: none">
+            <select name="ingenieroAsignado" id="usuarioAsignadoMantenimiento" class="form-control"
                     placeholder="Reporte formulario index" required>
-                <option disabled>SELECCIONA EL USUARIO A ASIGNAR</option>
+                <option disabled>SELECCIONA EL INGENIERO DE MANTENIMIENTO A ASIGNAR</option>
                 <option value="1">1 USUARIO INGENIERO</option>
                 <option value="2">2 USUARIO INGENIERO</option>
             </select>
-            <label for="usuarioAsignado">Usuario asignado</label>
+            <label for="usuarioAsignadoMantenimiento">Usuario asignado</label>
             <div class="invalid-feedback">
                 Selecciona alguna de las opciones indicadas
             </div>
@@ -33,7 +33,7 @@
         <div class="form-floating mb-3">
             <select name="tipoReporte" id="reporteAsignado" class="form-control"
                     placeholder="Reporte formulario index" required>
-                <option disabled>SELECCIONA EL REPORTE A ASIGNAR</option>
+                <option disabled>SELECCIONA EL REPORTE A ASIGNAR AL INGENIERO</option>
                 <option value="1">1 REPORTE NOMBRE PREGUNTA</option>
                 <option value="2">2 REPORTE NOMBRE PREGUNTA</option>
             </select>
@@ -44,17 +44,17 @@
         </div>
 
             <script>
-                const checkboxAsignarOtro = document.getElementById("asignarOtro");
-                const checkboxAutoAsignar = document.getElementById("autoAsignarse");
-                const divUsuarioAsignar = document.getElementById("divUsuarioAsignar");
-                const usuarioAsignado = document.getElementById("usuarioAsignado");
+                const asignarOtroMantenimientoIngenieroMantenimiento = document.getElementById("asignarOtroMantenimientoIngenieroMantenimiento");
+                const autoAsignarseIngenieroMantenimiento = document.getElementById("autoAsignarseIngenieroMantenimiento");
+                const divUsuarioAsignarIngenieroMantenimiento = document.getElementById("divUsuarioAsignarIngenieroMantenimiento");
+                const usuarioAsignado = document.getElementById("usuarioAsignadoMantenimiento");
 
-                checkboxAsignarOtro.addEventListener("change", ev => {
-                    divUsuarioAsignar.style.display = 'inherit'
+                asignarOtroMantenimientoIngenieroMantenimiento.addEventListener("change", ev => {
+                    divUsuarioAsignarIngenieroMantenimiento.style.display = 'inherit'
                     usuarioAsignado.disabled = false;
                 })
-                checkboxAutoAsignar.addEventListener("change", ev => {
-                    divUsuarioAsignar.style.display = 'none'
+                autoAsignarseIngenieroMantenimiento.addEventListener("change", ev => {
+                    divUsuarioAsignarIngenieroMantenimiento.style.display = 'none'
                     usuarioAsignado.disabled = true;
                 })
             </script>

@@ -1,15 +1,13 @@
 package com.bearbikes.maintenance_support.modelo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Reporte {
     private int id;
     private String emailUsuario;
@@ -20,6 +18,25 @@ public class Reporte {
     private Date fechaReporte;
     private TipoReporte tipo;
     private boolean enviado;
+
+    public String toStringMostrar() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("emailUsuario='").append(emailUsuario).append('\'');
+        sb.append(", nombre='").append(nombre).append('\'');
+        sb.append(", pregunta='").append(pregunta).append('\'');
+        sb.append(", fechaReporte=").append(fechaReporte);
+        sb.append(", tipo=").append(tipo);
+        return sb.toString();
+    }
+
+    public String toStringMostrar2() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("emailUsuario='").append(emailUsuario).append('\'');
+        sb.append(", nombre='").append(nombre).append('\'');
+        sb.append(", pregunta='").append(pregunta).append('\'');
+        sb.append(", solucion='").append(solucion);
+        return sb.toString();
+    }
 
     public Reporte (String emailUsuario, String nombreReporte, TipoReporte tipoReporte, String pregunta){
         this.emailUsuario = emailUsuario;

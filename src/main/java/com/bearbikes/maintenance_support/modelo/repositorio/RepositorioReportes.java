@@ -2,7 +2,9 @@ package com.bearbikes.maintenance_support.modelo.repositorio;
 
 import com.bearbikes.maintenance_support.bdd.BaseDeDatos;
 import com.bearbikes.maintenance_support.modelo.Reporte;
+import com.bearbikes.maintenance_support.modelo.peticiones.PeticionAsignarReporteSoporte;
 import com.bearbikes.maintenance_support.modelo.peticiones.PeticionRegistroReporte;
+import com.bearbikes.maintenance_support.modelo.peticiones.PeticionSolucionSoporte;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -22,6 +24,7 @@ public class RepositorioReportes {
 
     /**
      * Obtiene reportes por su tipo
+     *
      * @param tipoReporte
      * @return
      * @throws SQLException
@@ -34,36 +37,90 @@ public class RepositorioReportes {
         return MapeadorReportes.mapearReportes(resultSet);
     }
 
-    /**
-     * Obtiene reportes por su status
-     * @param statusReporte
-     * @return
-     * @throws SQLException
-     */
+    public Reporte obtenerReportePorId(int idReporte) throws SQLException {
+        String sentencia = "SELECT * FROM reportes WHERE id_reporte = (?);";
+        PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
+        preparedStatement.setInt(1, idReporte);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return MapeadorReportes.mapearReporte(resultSet);
+    }
+
+    public List<Reporte> obtenerRepotesSoporteAsignados(int idUsuario) throws SQLException {
+        String sentencia = "SELECT DISTINCT id_reporte FROM usuario_reporte WHERE id_usuario = (?);";
+        PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
+        preparedStatement.setInt(1, idUsuario);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        List<Reporte> reportesAsignados = new ArrayList<>();
+        while (resultSet.next()) {
+            reportesAsignados.add(obtenerReportePorId(resultSet.getInt("id_reporte")));
+        }
+        return reportesAsignados;
+    }
+
     public List<Reporte> obtenerRepotesMantenimiento(Reporte.StatusReporte statusReporte) throws SQLException {
-        String sentencia = "SELECT * FROM reportes WHERE status_reporte = (?);";
+        String sentencia = "SELECT * FROM reportes WHERE status_reporte = (?) AND tipo_reporte = 'MANTENIMIENTO';";
         PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
         preparedStatement.setString(1, statusReporte.name());
         ResultSet resultSet = preparedStatement.executeQuery();
         return MapeadorReportes.mapearReportes(resultSet);
     }
 
-    public boolean añadirReporte (PeticionRegistroReporte reporteAñadir) throws SQLException {
+    public boolean asignarReporte(PeticionAsignarReporteSoporte peticionAsignarReporteSoporte, int idUsuario) throws SQLException {
         String sentencia =
-                            """
-                            INSERT INTO reportes (email_usuario, nombre_reporte, status_reporte, pregunta_reporte, tipo_reporte) values
-                            	((?), (?), (?), (?), (?));
-                            """;
+                """
+                            insert into usuario_reporte values ((?), (?));
+                        """;
+        int otroUsuarioId = peticionAsignarReporteSoporte.idUsuario().orElse(idUsuario);
         PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
-        preparedStatement.setString(1, reporteAñadir.emailUsuario());
-        preparedStatement.setString(2, reporteAñadir.nombreReporte());
-        preparedStatement.setString(3, Reporte.StatusReporte.ABIERTO_SOPORTE.name());
-        preparedStatement.setString(4, reporteAñadir.preguntaReporte());
-        preparedStatement.setString(5, reporteAñadir.tipoReporte().name());
+        preparedStatement.setInt(1, otroUsuarioId != 0 ? otroUsuarioId : idUsuario);
+        preparedStatement.setInt(2, peticionAsignarReporteSoporte.idReporte());
         int modificados = preparedStatement.executeUpdate();
-        return modificados==1;
+
+        String sentencia2 =
+                """
+                            UPDATE reportes SET status_reporte = 'SOLUCIONADO_SOPORTE' where id_reporte = (?);
+                        """;
+        PreparedStatement preparedStatement2 = connectionBdd.prepareStatement(sentencia2);
+        preparedStatement2.setInt(1, peticionAsignarReporteSoporte.idReporte());
+        int modificados2 = preparedStatement.executeUpdate();
+        return modificados == 1 && modificados2 == 1;
     }
 
+    public boolean añadirReporte(PeticionRegistroReporte reporteAñadir) throws SQLException {
+        String sentencia =
+                """
+                        INSERT INTO reportes (email_usuario, nombre_reporte, status_reporte, pregunta_reporte, tipo_reporte) values
+                        	((?), (?), (?), (?), (?));
+                        """;
+        PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
+        preparedStatement.setString(1, reporteAñadir.email());
+        preparedStatement.setString(2, reporteAñadir.nombre());
+        preparedStatement.setString(3, Reporte.StatusReporte.ABIERTO_SOPORTE.name());
+        preparedStatement.setString(4, reporteAñadir.pregunta());
+        preparedStatement.setString(5, reporteAñadir.tipoReporte());
+        int modificados = preparedStatement.executeUpdate();
+        return modificados == 1;
+    }
+
+    public boolean solucionarReporteSoporte(PeticionSolucionSoporte peticionSolucionSoporte) throws SQLException {
+        String sentencia =
+                """
+                            UPDATE reportes SET solucion_reporte = (?), status_reporte = 'SOLUCIONADO_SOPORTE'  WHERE id_reporte = (?);
+                        """;
+
+        PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
+        preparedStatement.setString(1, peticionSolucionSoporte.solucion());
+        preparedStatement.setInt(2, peticionSolucionSoporte.idReporte());
+        int modificados = preparedStatement.executeUpdate();
+        return modificados == 1;
+    }
+
+    public List<Reporte> obtenerReportesSoporteSolucionados() throws SQLException {
+        String sentencia = "SELECT * FROM reportes WHERE status_reporte = 'SOLUCIONADO_SOPORTE' AND tipo_reporte = 'SOPORTE';";
+        PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return MapeadorReportes.mapearReportes(resultSet);
+    }
 
 
     public static class MapeadorReportes {
@@ -91,7 +148,7 @@ public class RepositorioReportes {
                 int idReporte = (rs.getInt("id_reporte"));
                 String emailUsuario = rs.getString("email_usuario");
                 String nombreReporte = rs.getString("nombre_reporte");
-                Reporte.StatusReporte statusReporte = Reporte.StatusReporte.valueOf(rs.getString("email_usuario"));
+                Reporte.StatusReporte statusReporte = Reporte.StatusReporte.valueOf(rs.getString("status_reporte"));
                 String preguntaReporte = rs.getString("pregunta_reporte");
                 String solucionReporte = rs.getString("solucion_reporte");
                 Date fechaReporte = rs.getDate("fecha_reporte");

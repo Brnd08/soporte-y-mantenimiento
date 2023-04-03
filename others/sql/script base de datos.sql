@@ -64,17 +64,18 @@ create table reportes(
 	id_reporte int primary key auto_increment,
     email_usuario varchar(30) not null,
     nombre_reporte varchar(20)not null,
-    status_reporte varchar(30) not null references statusReportes(status),
+    status_reporte varchar(30) not null default 'ABIERTO_SOPORTE'references statusReportes(status),
     pregunta_reporte varchar(100) not null,
     solucion_reporte varchar(150) default 'Solución Pendiente',
     fecha_reporte timestamp not null default now(),
     tipo_reporte varchar(30) not null default 'MANTENIMIENTO',
     enviado boolean default false   
 );
+SELECT * FROM reportes WHERE status_reporte = ('ABIERTO_SOPORTE') AND tipo_reporte = 'MANTENIMIENTO';
 INSERT INTO reportes (email_usuario, nombre_reporte, status_reporte, pregunta_reporte, tipo_reporte, enviado) values
-	('email@usuario.com_reporte 1', 'ABIERTO_SOPORTE', 'NO SE MUESTRA NADA EN EL INDICE', 'MANTENIMIENTO', false);
+	('email@usuario.com', 'reporte 1', 'ABIERTO_SOPORTE', 'NO SE MUESTRA NADA EN EL INDICE', 'MANTENIMIENTO', false);
     
-SELECT * FROM reportes ;
+SELECT * FROM reportes ; 
 SELECT * FROM reportes WHERE tipo_reporte = 'MANTENIMIENTO';
     SELECT * FROM reportes ;
     
@@ -83,3 +84,6 @@ create table faqs(
     pregunta varchar(100) not null,
     respuesta varchar(150)not null
 );
+
+INSERT INTO faqs (pregunta, respuesta)VALUES('UNA PREGUNTA DE ESAS TONTAS QUE SUELEN HACER LOS USUARIOS', 'UNA RESPUESTA DE PORQUE EL USUARIO NO LE SABE Y PORQUE LA SOLUCION ERA OBVIA Y SIEMPRE FUE CULTA DEL MISMO USUARIO');
+SELECT * FROM faqs ;
