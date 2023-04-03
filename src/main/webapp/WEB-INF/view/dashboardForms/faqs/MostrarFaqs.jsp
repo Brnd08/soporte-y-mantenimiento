@@ -1,0 +1,97 @@
+﻿<h2>FAQs registradas</h2>
+<div class="col-md-10 mx-auto col-lg-10">
+
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">PREGUNTA</th>
+                <th scope="col">RESPUESTA</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1,001</td>
+                <td>random</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <td>1,002</td>
+                <td>placeholder</td>
+                <td>irrelevant</td>
+            </tr>
+            <tr>
+                <td>1,003</td>
+                <td>data</td>
+                <td>rich</td>
+            </tr>
+            <tr>
+                <td>1,003</td>
+                <td>information</td>
+                <td>placeholder</td>
+            </tr>
+            <tr>
+                <td>1,004</td>
+                <td>text</td>
+                <td>random</td>
+            </tr>
+            <tr>
+                <td>1,005</td>
+                <td>dashboard</td>
+                <td>irrelevant</td>
+            </tr>
+            <tr>
+                <td>1,006</td>
+                <td>dashboard</td>
+                <td>illustrative</td>
+            </tr>
+            <tr>
+                <td>1,007</td>
+                <td>placeholder</td>
+                <td>tabular</td>
+            </tr>
+            <tr>
+                <td>1,008</td>
+                <td>random</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <td>1,009</td>
+                <td>placeholder</td>
+                <td>irrelevant</td>
+            </tr>
+            <tr>
+                <td>1,010</td>
+                <td>data</td>
+                <td>rich</td>
+            </tr>
+            <tr>
+                <td>1,011</td>
+                <td>information</td>
+                <td>placeholder</td>
+            </tr>
+            <tr>
+                <td>1,012</td>
+                <td>text</td>
+                <td>placeholder</td>
+            </tr>
+            <tr>
+                <td>1,013</td>
+                <td>dashboard</td>
+                <td>irrelevant</td>
+            </tr>
+            <tr>
+                <td>1,014</td>
+                <td>dashboard</td>
+                <td>illustrative</td>
+            </tr>
+            <tr>
+                <td>1,015</td>
+                <td>random</td>
+                <td>tabular</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

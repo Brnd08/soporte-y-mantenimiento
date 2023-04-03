@@ -133,36 +133,71 @@
                 <br>
             </div>
             <%-- ----------------------------------FORMULARIO ASIGNAR INGENIERO MANTENIMIENTO----------------------------------------------------%>
-            <div id="seccion-asignar-reporte-mantenimiento-ingeniero">
+            <div id="seccion-asignar-reporte-mantenimiento-ingeniero" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
+                 style="display: none;" <% } %>>
                 <jsp:include page="dashboardForms/mantenimiento/AsignarIngenieroMantenimiento.jsp"/>
                 <br>
                 <hr>
                 <br>
             </div>
             <%-- ----------------------------------FORMUALRIO SOLUCION REPORTE MANTENIMIENTO ----------------------------------------------------%>
-            <div id="seccion-resolver-reporte-mantenimiento-asignado">
+            <div id="seccion-resolver-reporte-mantenimiento-asignado" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_MANTENIMIENTO)) { %>
+                 style="display: none;" <% } %>>
                 <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>
                 <br>
                 <hr>
                 <br>
             </div>
             <%-- ----------------------------------FORMUALRIO INFORMAR REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
-            <div id="seccion-informar-reporte-mantenimiento-solucionado">
+            <div id="seccion-informar-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
+                 style="display: none;" <% } %>>
                 <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>
                 <br>
                 <hr>
                 <br>
             </div>
             <%-- ----------------------------------FORMUALRIO ASIGNAR REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
-            <div id="seccion-asignar-reporte-mantenimiento-solucionado">
+            <div id="seccion-asignar-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>
+                style="display: none;" <% } %>>
                 <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>
                 <br>
                 <hr>
                 <br>
             </div>
             <%-- ----------------------------------FORMUALRIO DEVOLVER REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
-            <div id="seccion-devolver-reporte-mantenimiento-solucionado">
+            <div id="seccion-devolver-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE)) { %>
+                style="display: none;" <% } %>>
                 <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>
+                <br>
+                <hr>
+                <br>
+            </div>
+            <br>
+        </main>
+        <br>
+        <hr style="background-color: red; height: 1em">
+        <br>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloFaqs">
+            <%-- ----------------------------------FORMULARIO AÑADIR FAQ----------------------------------------------------%>
+            <div id="seccion-añadir_faq" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
+                 style="display: none;" <% } %> >
+                <jsp:include page="dashboardForms/faqs/AñadirFaq.jsp"/>
+                <br>
+                <hr>
+                <br>
+            </div>
+            <%-- ----------------------------------FORMULARIO MOSTRAR FAQs----------------------------------------------------%>
+            <div id="seccion_mostrar_faqs" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
+                 style="display: none;" <% } %>>
+                <jsp:include page="dashboardForms/faqs/MostrarFaqs.jsp"/>
+                <br>
+                <hr>
+                <br>
+            </div>
+            <%-- ----------------------------------FORMUALRIO AÑADIR FAQ desde reporte cerrado ----------------------------------------------------%>
+            <div id="seccion-añadir_faq_reporte" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
+                 style="display: none;" <% } %>>
+                <jsp:include page="dashboardForms/faqs/AñadirFaqDesdeReporte.jsp"/>
                 <br>
                 <hr>
                 <br>
@@ -171,133 +206,7 @@
         </main>
 
 
-        <%--            <div class="table-responsive">--%>
-        <%--                <table class="table table-striped table-sm">--%>
-        <%--                    <thead>--%>
-        <%--                    <tr>--%>
-        <%--                        <th scope="col">#</th>--%>
-        <%--                        <th scope="col">Header</th>--%>
-        <%--                        <th scope="col">Header</th>--%>
-        <%--                        <th scope="col">Header</th>--%>
-        <%--                        <th scope="col">Header</th>--%>
-        <%--                    </tr>--%>
-        <%--                    </thead>--%>
-        <%--                    <tbody>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,001</td>--%>
-        <%--                        <td>random</td>--%>
-        <%--                        <td>data</td>--%>
-        <%--                        <td>placeholder</td>--%>
-        <%--                        <td>text</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,002</td>--%>
-        <%--                        <td>placeholder</td>--%>
-        <%--                        <td>irrelevant</td>--%>
-        <%--                        <td>visual</td>--%>
-        <%--                        <td>layout</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,003</td>--%>
-        <%--                        <td>data</td>--%>
-        <%--                        <td>rich</td>--%>
-        <%--                        <td>dashboard</td>--%>
-        <%--                        <td>tabular</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,003</td>--%>
-        <%--                        <td>information</td>--%>
-        <%--                        <td>placeholder</td>--%>
-        <%--                        <td>illustrative</td>--%>
-        <%--                        <td>data</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,004</td>--%>
-        <%--                        <td>text</td>--%>
-        <%--                        <td>random</td>--%>
-        <%--                        <td>layout</td>--%>
-        <%--                        <td>dashboard</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,005</td>--%>
-        <%--                        <td>dashboard</td>--%>
-        <%--                        <td>irrelevant</td>--%>
-        <%--                        <td>text</td>--%>
-        <%--                        <td>placeholder</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,006</td>--%>
-        <%--                        <td>dashboard</td>--%>
-        <%--                        <td>illustrative</td>--%>
-        <%--                        <td>rich</td>--%>
-        <%--                        <td>data</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,007</td>--%>
-        <%--                        <td>placeholder</td>--%>
-        <%--                        <td>tabular</td>--%>
-        <%--                        <td>information</td>--%>
-        <%--                        <td>irrelevant</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,008</td>--%>
-        <%--                        <td>random</td>--%>
-        <%--                        <td>data</td>--%>
-        <%--                        <td>placeholder</td>--%>
-        <%--                        <td>text</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,009</td>--%>
-        <%--                        <td>placeholder</td>--%>
-        <%--                        <td>irrelevant</td>--%>
-        <%--                        <td>visual</td>--%>
-        <%--                        <td>layout</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,010</td>--%>
-        <%--                        <td>data</td>--%>
-        <%--                        <td>rich</td>--%>
-        <%--                        <td>dashboard</td>--%>
-        <%--                        <td>tabular</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,011</td>--%>
-        <%--                        <td>information</td>--%>
-        <%--                        <td>placeholder</td>--%>
-        <%--                        <td>illustrative</td>--%>
-        <%--                        <td>data</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,012</td>--%>
-        <%--                        <td>text</td>--%>
-        <%--                        <td>placeholder</td>--%>
-        <%--                        <td>layout</td>--%>
-        <%--                        <td>dashboard</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,013</td>--%>
-        <%--                        <td>dashboard</td>--%>
-        <%--                        <td>irrelevant</td>--%>
-        <%--                        <td>text</td>--%>
-        <%--                        <td>visual</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,014</td>--%>
-        <%--                        <td>dashboard</td>--%>
-        <%--                        <td>illustrative</td>--%>
-        <%--                        <td>rich</td>--%>
-        <%--                        <td>data</td>--%>
-        <%--                    </tr>--%>
-        <%--                    <tr>--%>
-        <%--                        <td>1,015</td>--%>
-        <%--                        <td>random</td>--%>
-        <%--                        <td>tabular</td>--%>
-        <%--                        <td>information</td>--%>
-        <%--                        <td>text</td>--%>
-        <%--                    </tr>--%>
-        <%--                    </tbody>--%>
-        <%--                </table>--%>
-        <%--            </div>--%>
+
 
     </div>
 </div>
