@@ -50,29 +50,36 @@ create table statusReportes(
     tipo_reporte varchar (30) not null
 );
 INSERT INTO statusReportes values
-('ABIERTO', 'SOPORTE'),
-('EN_PROCESO', 'SOPORTE'),
-('SOLUCIONADO', 'SOPORTE'),
-('RECIBIDO', 'MANTENIMIENTO'),
-('PENDIENTE', 'MANTENIMIENTO'),
-('ASIGNADO', 'MANTENIMIENTO'),
-('EN_IMPLEMENTACION', 'MANTENIMIENTO'),
-('IMPLEMENTADO', 'MANTENIMIENTO');
+('ABIERTO_SOPORTE'),
+('EN_PROCESO_SOPORTE'),
+('SOLUCIONADO_SOPORTE'),
+('RECIBIDO_MANTENIMIENTO'),
+('PENDIENTE_MANTENIMIENTO'),
+('ASIGNADO_MANTENIMIENTO'),
+('EN_IMPLEMENTACION_MANTENIMIENTO'),
+('IMPLEMENTADO_MANTENIMIENTO');
 
-drop table reportes;
+-- drop table reportes;
 create table reportes(
 	id_reporte int primary key auto_increment,
     email_usuario varchar(30) not null,
     nombre_reporte varchar(20)not null,
     status_reporte varchar(30) not null references statusReportes(status),
-    pregunta_reporte varchar(50) not null,
+    pregunta_reporte varchar(100) not null,
     solucion_reporte varchar(150) default 'Solución Pendiente',
     fecha_reporte timestamp not null default now(),
-    tipo_reporte varchar(30) references statusReportes(tipo_reporte),
-    enviado boolean default false    
+    tipo_reporte varchar(30) not null default 'MANTENIMIENTO',
+    enviado boolean default false   
 );
 INSERT INTO reportes (email_usuario, nombre_reporte, status_reporte, pregunta_reporte, tipo_reporte, enviado) values
-	('email@usuario.com', 'reporte 1', 'ABIERTO', 'NO SE MUESTRA NADA EN EL INDICE', 'MANTENIMIENTO', false);
+	('email@usuario.com_reporte 1', 'ABIERTO_SOPORTE', 'NO SE MUESTRA NADA EN EL INDICE', 'MANTENIMIENTO', false);
     
 SELECT * FROM reportes ;
+SELECT * FROM reportes WHERE tipo_reporte = 'MANTENIMIENTO';
+    SELECT * FROM reportes ;
     
+create table faqs(
+	id_pregunta int primary key auto_increment,
+    pregunta varchar(100) not null,
+    respuesta varchar(150)not null
+);

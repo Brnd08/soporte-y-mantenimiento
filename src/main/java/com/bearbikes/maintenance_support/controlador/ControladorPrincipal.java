@@ -46,4 +46,9 @@ public class ControladorPrincipal {
         }
         return "login";
     }
+
+    @GetMapping("/pruebasForm")
+    public String prueba (){
+        return "dashboardForms/AsignarIngenieroSoporte";
+    }
 }
