@@ -5,11 +5,10 @@
     List<Reporte> reportesResueltos = (List<Reporte>) session.getAttribute("reportes-solucionados-soporte");
     System.out.println("reportesResueltos " + reportesResueltos);
 
-    String errorDevolverReporte = (String) session.getAttribute("errorDevolverReporte");
-    System.out.println(errorDevolverReporte);
-
-    String exitoDevolverReporte = (String) session.getAttribute("exitoDevolverReporte");
-    System.out.println(exitoDevolverReporte);
+    String errorDevolucionReporteSoporte = (String) session.getAttribute("errorDevolucionReporteSoporte");
+    System.out.println(errorDevolucionReporteSoporte);
+    String exitoDevolucionReporteSoporte = (String) session.getAttribute("exitoDevolucionReporteSoporte");
+    System.out.println(exitoDevolucionReporteSoporte);
 
     String plantillaMensajeError =
             "                   <svg xmlns='http://www.w3.org/2000/svg' style='display: none;'>\n" +
@@ -51,15 +50,20 @@
                 <%
                     if (reportesResueltos != null) {
                         for (Reporte reporteResuelto : reportesResueltos) {
+
                             out.print(
-                                    "<option value='" + reporteResuelto.getId() + "'>" +
-                                            reporteResuelto.toStringMostrar2() +
-                                            "</option>"
+                                    "<option value='" + reporteResuelto.getId() + "' >" + "REPORTE #" + reporteResuelto.getId() +"</option>"+
+                                    "<option disabled > &nbsp;&nbsp;&nbsp; Nombre Reporte: " + reporteResuelto.getNombre() +"</option>"+
+                                    "<option disabled > &nbsp;&nbsp;&nbsp; Email Usuario: " + reporteResuelto.getEmailUsuario() +"</option>"+
+                                    "<option disabled > &nbsp;&nbsp;&nbsp; Pregunta: " + reporteResuelto.getPregunta() +"</option>"+
+                                    "<option disabled > &nbsp;&nbsp;&nbsp; Solucion: " + reporteResuelto.getSolucion() +"</option>"+
+                                    "<option disabled > &nbsp;&nbsp;&nbsp; Status: " + reporteResuelto.getStatus() +"</option>"
+
                             );
                         }
                     }
-
                 %>
+
             </select>
             <label for="reporteAsignado">Reporte Resolver</label>
             <div class="invalid-feedback">
@@ -73,12 +77,12 @@
 
 
     <%
-        if (errorDevolverReporte != null) {
-            out.print(plantillaMensajeError.replace("$ContenidoMensaje", errorDevolverReporte));
+        if (errorDevolucionReporteSoporte != null) {
+            out.print(plantillaMensajeError.replace("$ContenidoMensaje", errorDevolucionReporteSoporte));
             session.removeAttribute("errorDevolverReporte");
         }
-        if (exitoDevolverReporte != null) {
-            out.print(plantillaMensajeExito.replace("$ContenidoMensaje", exitoDevolverReporte));
+        if (exitoDevolucionReporteSoporte != null) {
+            out.print(plantillaMensajeExito.replace("$ContenidoMensaje", exitoDevolucionReporteSoporte));
             session.removeAttribute("exitoDevolverReporte");
         }
 

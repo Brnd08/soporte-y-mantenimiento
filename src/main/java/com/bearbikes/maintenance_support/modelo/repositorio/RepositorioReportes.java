@@ -3,6 +3,7 @@ package com.bearbikes.maintenance_support.modelo.repositorio;
 import com.bearbikes.maintenance_support.bdd.BaseDeDatos;
 import com.bearbikes.maintenance_support.modelo.Reporte;
 import com.bearbikes.maintenance_support.modelo.peticiones.PeticionAsignarReporteSoporte;
+import com.bearbikes.maintenance_support.modelo.peticiones.PeticionDevolverReporte;
 import com.bearbikes.maintenance_support.modelo.peticiones.PeticionRegistroReporte;
 import com.bearbikes.maintenance_support.modelo.peticiones.PeticionSolucionSoporte;
 import org.springframework.stereotype.Repository;
@@ -22,14 +23,15 @@ public class RepositorioReportes {
         this.connectionBdd = new BaseDeDatos().getConnection();
     }
 
-    /**
-     * Obtiene reportes por su tipo
-     *
-     * @param tipoReporte
-     * @return
-     * @throws SQLException
-     */
-    public List<Reporte> obtenerRepotesMantenimiento(String tipoReporte) throws SQLException {
+
+    public List<Reporte> obtenerReportesRegistrados() throws SQLException {
+        String sentencia = "SELECT * FROM reportes order by tipo_reporte, status_reporte;";
+        PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return MapeadorReportes.mapearReportes(resultSet);
+    }
+
+    public List<Reporte> obtenerReportesPorTipoYStatus(String tipoReporte) throws SQLException {
         String sentencia = "SELECT * FROM reportes WHERE tipo_reporte = (?);";
         PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
         preparedStatement.setString(1, tipoReporte);
@@ -42,11 +44,13 @@ public class RepositorioReportes {
         PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
         preparedStatement.setInt(1, idReporte);
         ResultSet resultSet = preparedStatement.executeQuery();
+        if(resultSet.next())
         return MapeadorReportes.mapearReporte(resultSet);
+        else throw new RuntimeException("No se encontro ningun reporte con el id => " + idReporte);
     }
 
-    public List<Reporte> obtenerRepotesSoporteAsignados(int idUsuario) throws SQLException {
-        String sentencia = "SELECT DISTINCT id_reporte FROM usuario_reporte WHERE id_usuario = (?);";
+    public List<Reporte> obtenerReportesSoporteAsignados(int idUsuario) throws SQLException {
+        String sentencia = "SELECT distinct usuario_reporte.id_reporte, reportes.status_reporte FROM usuario_reporte, reportes WHERE usuario_reporte.id_usuario = (?) and usuario_reporte.id_reporte=reportes.id_reporte AND reportes.status_reporte = 'EN_PROCESO_SOPORTE';";
         PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
         preparedStatement.setInt(1, idUsuario);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -57,8 +61,18 @@ public class RepositorioReportes {
         return reportesAsignados;
     }
 
-    public List<Reporte> obtenerRepotesMantenimiento(Reporte.StatusReporte statusReporte) throws SQLException {
-        String sentencia = "SELECT * FROM reportes WHERE status_reporte = (?) AND tipo_reporte = 'MANTENIMIENTO';";
+
+    public List<Reporte> obtenerReportesPorTipoYStatus(Reporte.StatusReporte statusReporte, Reporte.TipoReporte tipoReporte) throws SQLException {
+        String sentencia = "SELECT * FROM reportes WHERE status_reporte = (?) AND tipo_reporte = (?);";
+        PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
+        preparedStatement.setString(1, statusReporte.name());
+        preparedStatement.setString(2, tipoReporte.name());
+        ResultSet resultSet = preparedStatement.executeQuery();
+        return MapeadorReportes.mapearReportes(resultSet);
+    }
+
+    public List<Reporte> obtenerReportesPorStatus(Reporte.StatusReporte statusReporte) throws SQLException {
+        String sentencia = "SELECT * FROM reportes WHERE status_reporte = (?) ;";
         PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
         preparedStatement.setString(1, statusReporte.name());
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -78,11 +92,11 @@ public class RepositorioReportes {
 
         String sentencia2 =
                 """
-                            UPDATE reportes SET status_reporte = 'SOLUCIONADO_SOPORTE' where id_reporte = (?);
+                            UPDATE reportes SET status_reporte = 'EN_PROCESO_SOPORTE' where id_reporte = (?);
                         """;
         PreparedStatement preparedStatement2 = connectionBdd.prepareStatement(sentencia2);
         preparedStatement2.setInt(1, peticionAsignarReporteSoporte.idReporte());
-        int modificados2 = preparedStatement.executeUpdate();
+        int modificados2 = preparedStatement2.executeUpdate();
         return modificados == 1 && modificados2 == 1;
     }
 
@@ -122,29 +136,37 @@ public class RepositorioReportes {
         return MapeadorReportes.mapearReportes(resultSet);
     }
 
+    public boolean devolverReporte(PeticionDevolverReporte peticionDevolverReporte) throws SQLException {
+        String sentencia =
+                        """
+                        UPDATE reportes SET status_reporte = 'CERRADO'  WHERE id_reporte = (?);
+                        """;
+
+        PreparedStatement preparedStatement = connectionBdd.prepareStatement(sentencia);
+        preparedStatement.setInt(1, peticionDevolverReporte.idReporte());
+        int modificados = preparedStatement.executeUpdate();
+        return modificados == 1;
+    }
+
+
+
 
     public static class MapeadorReportes {
         public static List<Reporte> mapearReportes(ResultSet rs) throws SQLException {
             List<Reporte> listaReportes = new ArrayList<>();
-            while (!rs.isLast()) {
+            while (rs.next()) {
                 listaReportes.add(mapearReporte(rs));
             }
+            if(listaReportes.isEmpty())
+                System.out.println("La lista recupertada esta vacia :((");
             return listaReportes;
+
+
         }
 
         public static Reporte mapearReporte(ResultSet rs) throws SQLException {
-            Reporte reporteObtenido;
-            //    id_reporte int primary key auto_increment,
-//    email_usuario varchar(30) not null,
-//    nombre_reporte varchar(20)not null,
-//    status_reporte varchar(30) not null references statusReportes(status),
-//    pregunta_reporte varchar(100) not null,
-//    solucion_reporte varchar(150) default 'Solución Pendiente',
-//    fecha_reporte timestamp not null default now(),
-//    tipo_reporte varchar(30) references statusReportes(tipo_reporte),
-//    envi
+            Reporte reporteObtenido = null;
 
-            if (rs.next()) {
                 int idReporte = (rs.getInt("id_reporte"));
                 String emailUsuario = rs.getString("email_usuario");
                 String nombreReporte = rs.getString("nombre_reporte");
@@ -165,10 +187,9 @@ public class RepositorioReportes {
                         tipoReporte,
                         enviado
                 );
-                return reporteObtenido;
 
-            } else
-                throw new SQLException("No se recupero ningun reporte");
+            return reporteObtenido;
+
         }
     }
 }

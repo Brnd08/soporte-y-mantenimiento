@@ -63,7 +63,7 @@
 
         <div id="divUsuarioAsignar" class="form-floating mb-3" style="display: none">
             <select name="idUsuario" id="usuarioAsignado" class="form-control"
-                    placeholder="Reporte formulario index" required>
+                    placeholder="Reporte formulario index" required disabled>
                 <option disabled>SELECCIONA EL INGENIERO A ASIGNAR</option>
                 <%
                     if (ingenieroDisponibles != null) {

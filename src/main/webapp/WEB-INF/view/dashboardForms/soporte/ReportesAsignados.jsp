@@ -53,9 +53,11 @@
                     if (reportesAsignados != null) {
                         for (Reporte reporteAsignado : reportesAsignados) {
                             out.print(
-                                    "<option value='" + reporteAsignado.getId() + "'>" +
-                                            reporteAsignado.toStringMostrar() +
-                                            "</option>"
+                                    "<option value='" + reporteAsignado.getId() + "' >" + "REPORTE #" + reporteAsignado.getId() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Nombre Reporte: " + reporteAsignado.getNombre() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Email Usuario: " + reporteAsignado.getEmailUsuario() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Pregunta: " + reporteAsignado.getPregunta() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Status: " + reporteAsignado.getStatus() +"</option>"
                             );
                         }
                     }
