@@ -1,6 +1,7 @@
 package com.bearbikes.maintenance_support.controlador;
 
 import com.bearbikes.maintenance_support.modelo.peticiones.PeticionLogin;
+import com.bearbikes.maintenance_support.modelo.repositorio.RepositorioFaqs;
 import com.bearbikes.maintenance_support.modelo.repositorio.RepositorioUsuarios;
 import com.bearbikes.maintenance_support.modelo.usuarios.Usuario;
 import jakarta.servlet.http.HttpSession;
@@ -19,7 +20,11 @@ public class ControladorPrincipal {
     @Autowired
     private final RepositorioUsuarios repositorioUsuarios;
 
-    public ControladorPrincipal(RepositorioUsuarios repositorioUsuarios) {
+    @Autowired
+    private final RepositorioFaqs repositorioFaqs;
+
+    public ControladorPrincipal(RepositorioUsuarios repositorioUsuarios, RepositorioFaqs repositorioFaqs) {
+        this.repositorioFaqs = repositorioFaqs;
         this.repositorioUsuarios = repositorioUsuarios;
     }
 
@@ -47,8 +52,21 @@ public class ControladorPrincipal {
         return "login";
     }
 
+    @GetMapping("/faqs")
+    public String regresarFaqs (HttpSession session){
+        try {
+            session.setAttribute("faqs-registradas", repositorioFaqs.obtenerFaqsRegistradas());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "Faqs";
+    }
+
+
     @GetMapping("/pruebasForm")
     public String prueba (){
         return "dashboardForms/AsignarIngenieroSoporte";
     }
+
+
 }

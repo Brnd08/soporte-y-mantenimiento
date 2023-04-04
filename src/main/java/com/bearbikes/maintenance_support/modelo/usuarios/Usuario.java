@@ -30,9 +30,11 @@ public abstract class Usuario {
     }
     public String toStringMostrar() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("email='").append(email).append('\'');
-        sb.append(", nombre='").append(nombre).append('\'');
-        sb.append(", tipoUsuario=").append(tipoUsuario);
+
+        sb.append(id).append(" | ");
+        sb.append(nombre).append(" | ");
+        sb.append(tipoUsuario).append(" | ");
+        sb.append(email);
         return sb.toString();
     }
 

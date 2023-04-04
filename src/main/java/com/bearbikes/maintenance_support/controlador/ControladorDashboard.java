@@ -1,10 +1,8 @@
 package com.bearbikes.maintenance_support.controlador;
 
 import com.bearbikes.maintenance_support.modelo.Reporte;
-import com.bearbikes.maintenance_support.modelo.peticiones.PeticionAsignarReporteSoporte;
-import com.bearbikes.maintenance_support.modelo.peticiones.PeticionDevolverReporte;
-import com.bearbikes.maintenance_support.modelo.peticiones.PeticionRegistroReporte;
-import com.bearbikes.maintenance_support.modelo.peticiones.PeticionSolucionSoporte;
+import com.bearbikes.maintenance_support.modelo.peticiones.*;
+import com.bearbikes.maintenance_support.modelo.repositorio.RepositorioFaqs;
 import com.bearbikes.maintenance_support.modelo.repositorio.RepositorioReportes;
 import com.bearbikes.maintenance_support.modelo.repositorio.RepositorioUsuarios;
 import com.bearbikes.maintenance_support.modelo.usuarios.Usuario;
@@ -24,16 +22,21 @@ public class ControladorDashboard {
     @Autowired
     private final RepositorioReportes repositorioReportes;
     @Autowired
+    private final RepositorioFaqs repositorioFaqs;
+    @Autowired
     private final RepositorioUsuarios repositorioUsuarios;
+
     @Autowired
 //    private final EmailService servicioEmails;
 
 
     public ControladorDashboard(RepositorioReportes repositorioReportes,
-                                RepositorioUsuarios repositorioUsuarios
+                                RepositorioUsuarios repositorioUsuarios,
+                                RepositorioFaqs repositorioFaqs
 //                                EmailService servicioEmails
     ) {
         this.repositorioReportes = repositorioReportes;
+        this.repositorioFaqs = repositorioFaqs;
 //        this.servicioEmails = servicioEmails;
         this.repositorioUsuarios = repositorioUsuarios;
     }
@@ -48,19 +51,7 @@ public class ControladorDashboard {
         }
         session.setAttribute("modulos disponibles", rolesUsuario);
 
-        try {
-            session.setAttribute("reportes-soporte-abiertos", repositorioReportes.obtenerRepotesMantenimiento(Reporte.StatusReporte.ABIERTO_SOPORTE));
-            session.setAttribute("ingenieros-soporte", repositorioUsuarios.obtenerPorTipoUsuario(Usuario.TipoUsuario.INGENIERO_SOPORTE));
-            session.setAttribute("reportes-soporte-asignados", repositorioReportes.obtenerRepotesSoporteAsignados(usuarioActivo.getId()));
-            session.setAttribute("reportes-solucionados-soporte", repositorioReportes.obtenerReportesSoporteSolucionados());
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        return "dashboard";
+        return dashboardConAtributosDeSesion(session, usuarioActivo);
     }
 
     @PostMapping("/dashboard")
@@ -71,8 +62,7 @@ public class ControladorDashboard {
         if (usuarioActivo == null || rolesUsuario == null) {
             return "redirect:/login";
         }
-
-        return "dashboard";
+        return dashboardConAtributosDeSesion(session, usuarioActivo);
     }
 
     @PostMapping("/nuevo-reporte")
@@ -95,9 +85,7 @@ public class ControladorDashboard {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-
-
-        return "dashboard";
+        return dashboardConAtributosDeSesion(session, usuarioActivo);
     }
 
 
@@ -112,8 +100,7 @@ public class ControladorDashboard {
 
         System.out.println(peticionAsignarReporteSoporte);
         try {
-            boolean asignacionExitosa = repositorioReportes.asignarReporte(peticionAsignarReporteSoporte
-                    , usuarioActivo.getId());
+            boolean asignacionExitosa = repositorioReportes.asignarReporte(peticionAsignarReporteSoporte, usuarioActivo.getId());
             System.out.println("asignacionExitosa? =>" + asignacionExitosa);
             session.setAttribute("exitoAsignacionReporteSoporte", "se asigno correctamente al usuario");
         } catch (SQLException e) {
@@ -122,9 +109,7 @@ public class ControladorDashboard {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-
-
-        return "dashboard";
+        return dashboardConAtributosDeSesion(session, usuarioActivo);
     }
 
     @PostMapping("/solucion-reporte")
@@ -148,8 +133,7 @@ public class ControladorDashboard {
             e.printStackTrace();
         }
 
-
-        return "dashboard";
+        return dashboardConAtributosDeSesion(session, usuarioActivo);
     }
 
     @PostMapping("/devolver-reporte")
@@ -164,17 +148,67 @@ public class ControladorDashboard {
         System.out.println(peticionDevolverReporte);
         try {
 
-            boolean asignacionExitosa = repositorioReportes.solucionarReporteSoporte(peticionDevolverReporte);
-            System.out.println("solcion exitosa ? =>" + asignacionExitosa);
-            session.setAttribute("exitoResolucionReporteSoporte", "Se guardo la solucion correctamente");
+            boolean asignacionExitosa = repositorioReportes.devolverReporte(peticionDevolverReporte);
+            System.out.println("devolucion exitosa ? =>" + asignacionExitosa);
+            session.setAttribute("exitoDevolucionReporteSoporte", "Se devolvio el reporte y se cerro correctamente");
         } catch (SQLException e) {
-            session.setAttribute("errorResolucionReporteSoporte", e.getMessage());
-
+            session.setAttribute("errorDevolucionReporteSoporte", e.getMessage());
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        return dashboardConAtributosDeSesion(session, usuarioActivo);
+    }
 
+    @PostMapping("/agregar-faq")
+    public String agregarNuevaFaq(Model parametros, HttpSession session, @ModelAttribute PeticionRegistroFaq peticionRegistroFaq) {
+        parametros.addAttribute("sesion activa", true);
+        Usuario usuarioActivo = (Usuario) session.getAttribute("usuario sesión");
+        List<Usuario.TipoUsuario> rolesUsuario = (List<Usuario.TipoUsuario>) session.getAttribute("roles");
+        if (usuarioActivo == null || rolesUsuario == null) {
+            return "redirect:/login";
+        }
+
+        System.out.println(peticionRegistroFaq);
+        try {
+            boolean registroFaqExitoso;
+            if (peticionRegistroFaq.idReporte().isPresent()) {
+
+                registroFaqExitoso = repositorioFaqs.publicarReporteComoFaq(peticionRegistroFaq);
+                session.setAttribute("exitoAgregarFaq", "Se añadio la faq exitosamente");
+            } else {
+                registroFaqExitoso = repositorioFaqs.añadirFaq(peticionRegistroFaq);
+                session.setAttribute("exitoAgregarFaq1", "Se añadio la faq exitosamente");
+            }
+            System.out.println("registro faq exitosa ? =>" + registroFaqExitoso);
+        } catch (SQLException e) {
+            if (peticionRegistroFaq.idReporte().isPresent())
+                session.setAttribute("errorAgregarFaq", e.getMessage());
+            else
+                session.setAttribute("errorAgregarFaq1", e.getMessage());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return dashboardConAtributosDeSesion(session, usuarioActivo);
+    }
+
+
+    private String dashboardConAtributosDeSesion(HttpSession session, Usuario usuarioActivo) {
+        try {
+            session.setAttribute("reportes-soporte-abiertos", repositorioReportes.obtenerReportesPorTipoYStatus(
+                    Reporte.StatusReporte.ABIERTO_SOPORTE, Reporte.TipoReporte.SOPORTE));
+            session.setAttribute("ingenieros-soporte", repositorioUsuarios.obtenerPorTipoUsuario(
+                    Usuario.TipoUsuario.INGENIERO_SOPORTE));
+            session.setAttribute("reportes-soporte-asignados", repositorioReportes.obtenerReportesSoporteAsignados(usuarioActivo.getId()));
+            session.setAttribute("reportes-solucionados-soporte", repositorioReportes.obtenerReportesSoporteSolucionados());
+            session.setAttribute("reportes-registrados", repositorioReportes.obtenerReportesRegistrados());
+            session.setAttribute("reportes-cerrados", repositorioReportes.obtenerReportesPorStatus(Reporte.StatusReporte.CERRADO));
+            session.setAttribute("faqs-registradas", repositorioFaqs.obtenerFaqsRegistradas());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return "dashboard";
     }
+
 }

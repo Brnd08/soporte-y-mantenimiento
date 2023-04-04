@@ -20,10 +20,11 @@
     String mensajeError = (String) request.getAttribute("Mensaje de Error");
 
 
-
 %>
 <html lang="es" data-bs-theme="auto">
 <head>
+
+    <link rel="icon" href="../../images/bearbikesIcon.ico">
     <script src="../../bootstrap/color-modes.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,12 +35,17 @@
     <link href="../../bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <link href="../../css/dashboard.css" rel="stylesheet">
+    <style>
+        hr#seccion-hr {
+            background-color: #70add9;
+            height: .8em;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="darkmode.jsp"/>
 
 <header class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow">
-
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -68,7 +74,6 @@
         </div>
     </header>
 </div>
-
 <div class="container-fluid">
     <div class="row">
         <%-- ----------------------------------MENU NAVEGACION----------------------------------------------------%>
@@ -76,15 +81,44 @@
             <br><br>
             <jsp:include page="menu.jsp"/>
         </div>
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloSoporte">
-            <%-- ----------------------------------FORMULARIO NUEVO REPORTE----------------------------------------------------%>
-            <div id="seccion-nuevo-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.ASISTENTE)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/soporte/AñadirReporte.jsp"/>
+
+        <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                Hola <%=usuarioSesion.getTipoUsuario().toString().replace("_", " ")%> <%=usuarioSesion.getNombre()%>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+        </div>
+
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"
+              id="moduloAsistente" <% if (!modulos.contains(Usuario.TipoUsuario.ASISTENTE)) { %>
+              style="display: none;" <% } %>>
+
+            <hr id="seccion-hr">
+            <h1>ASISTENTE</h1>
+            <hr id="seccion-hr">
+            <%-- ----------------------------------ASISTENTE MOSTRAR REPORTES----------------------------------------------------%>
+            <div id="seccion_mostrar_registros">
+                <jsp:include page="dashboardForms/asistente/MostrarRegistros.jsp"/>
                 <br>
                 <hr>
                 <br>
             </div>
+            <%-- ----------------------------------ASISTENTE NUEVO REPORTE----------------------------------------------------%>
+            <div id="seccion-nuevo-reporte-soporte">
+                <jsp:include page="dashboardForms/asistente/AñadirReporte.jsp"/>
+                <br>
+                <br>
+            </div>
+        </main>
+
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloSoporte">
+
+            <hr id="seccion-hr">
+            <h1>SOPORTE</h1>
+            <hr id="seccion-hr">
             <%-- ----------------------------------FORMULARIO ASIGNAR REPORTE----------------------------------------------------%>
             <div id="seccion-asignar-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>
                  style="display: none;" <% } %>>
@@ -107,12 +141,14 @@
                 <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>
                 <br>
             </div>
-
+            <br>
+            <br>
         </main>
-        <br>
-        <hr style="background-color: red; height: 1em">
-        <br>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloMantenimiento">
+
+            <hr id="seccion-hr">
+            <h1>MATENIMIENTO</h1>
+            <hr id="seccion-hr">
             <%-- ----------------------------------FORMULARIO ASIGNAR GERENTE MANTENIMIENTO----------------------------------------------------%>
             <div id="seccion-asignar-reporte-mantenimiento-gerente" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>
                  style="display: none;" <% } %>>
@@ -163,10 +199,18 @@
             </div>
             <br>
         </main>
-        <br>
-        <hr style="background-color: red; height: 1em">
-        <br>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloFaqs">
+            <hr id="seccion-hr">
+            <h1>FAQs</h1>
+            <hr id="seccion-hr">
+            <%-- ----------------------------------DESPLEGAR FAQs REGISTRADAS----------------------------------------------------%>
+            <div id="seccion_mostrar_faqs" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
+                 style="display: none;" <% } %>>
+                <jsp:include page="dashboardForms/faqs/MostrarFaqs.jsp"/>
+                <br>
+                <hr>
+                <br>
+            </div>
             <%-- ----------------------------------FORMULARIO AÑADIR FAQ----------------------------------------------------%>
             <div id="seccion-añadir_faq" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
                  style="display: none;" <% } %> >
@@ -175,14 +219,7 @@
                 <hr>
                 <br>
             </div>
-            <%-- ----------------------------------FORMULARIO MOSTRAR FAQs----------------------------------------------------%>
-            <div id="seccion_mostrar_faqs" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/faqs/MostrarFaqs.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
+
             <%-- ----------------------------------FORMUALRIO AÑADIR FAQ desde reporte cerrado ----------------------------------------------------%>
             <div id="seccion-añadir_faq_reporte" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
                  style="display: none;" <% } %>>
@@ -201,9 +238,7 @@
 
 <script src="../../bootstrap/bootstrap.bundle.min.js"></script>
 
-<script src="../../js/feather.min.js"
-        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
-        crossorigin="anonymous"></script>
-<script src="../../js/dashboard.js"></script>
+
+<%--<script src="../../js/dashboard.js"></script>--%>
 </body>
 </html>

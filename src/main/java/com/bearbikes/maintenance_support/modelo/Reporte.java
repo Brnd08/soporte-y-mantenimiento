@@ -17,24 +17,29 @@ public class Reporte {
     private String solucion;
     private Date fechaReporte;
     private TipoReporte tipo;
+
     private boolean enviado;
+
+    public boolean getEnviado(){
+        return this.enviado;
+    }
 
     public String toStringMostrar() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("emailUsuario='").append(emailUsuario).append('\'');
-        sb.append(", nombre='").append(nombre).append('\'');
-        sb.append(", pregunta='").append(pregunta).append('\'');
-        sb.append(", fechaReporte=").append(fechaReporte);
-        sb.append(", tipo=").append(tipo);
+        sb.append(id).append(" | ");
+        sb.append(nombre).append(" | ");
+        sb.append(pregunta).append(" | ");
+        sb.append(tipo);
         return sb.toString();
     }
 
     public String toStringMostrar2() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("emailUsuario='").append(emailUsuario).append('\'');
-        sb.append(", nombre='").append(nombre).append('\'');
-        sb.append(", pregunta='").append(pregunta).append('\'');
-        sb.append(", solucion='").append(solucion);
+        sb.append("emailUsuario: ").append(emailUsuario).append(",<hr>");
+        sb.append("nombre: ").append(nombre).append(",<hr>");
+        sb.append("pregunta: ").append(pregunta).append(",<hr>");
+        sb.append("solucion: ").append(solucion).append(",<hr>");
+        sb.append("status:").append(status);
         return sb.toString();
     }
 
@@ -62,6 +67,7 @@ public class Reporte {
     public enum StatusReporte {
         ABIERTO_SOPORTE,
         EN_PROCESO_SOPORTE,
+        CERRADO,
         SOLUCIONADO_SOPORTE,
         RECIBIDO_MANTENIMIENTO,
         PENDIENTE_MANTENIMIENTO,
