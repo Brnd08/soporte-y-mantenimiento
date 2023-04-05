@@ -1,11 +1,11 @@
-﻿<%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %>
 <%@ page
         import="com.bearbikes.maintenance_support.modelo.Reporte" %>
 <%@ page import="com.bearbikes.maintenance_support.modelo.usuarios.Usuario" %>
 <%@ page import="com.bearbikes.maintenance_support.modelo.usuarios.IngenieroSoporte" %><%-- ---------------------------------- FORMULARIO ASIGNAR INGENIEBRIO----------------------------------------------------%>
 
 <%
-    List<Reporte> reportesAbiertos = (List<Reporte>) session.getAttribute("reportes-soporte-abiertos");
+    List<Reporte> reportesAbiertos = (List<Reporte>) session.getAttribute("reportes-mantenimiento-implementados");
     System.out.println(reportesAbiertos);
 
     List<Usuario> ingenieroDisponibles = (List<Usuario>) session.getAttribute("ingenieros-soporte");
@@ -44,9 +44,9 @@
                     "</div>";
 
 %>
-<h2>Asignar a ingeniero soporte</h2>
+<h2>Asignar a ingeniero Soporte</h2>
 <div class="col-md-10 mx-auto col-lg-10">
-    <form method="post" action="/asignar-reporte"
+    <form method="post" action="/asignar-reporte-implementado"
           class="p-4 p-md-5 border rounded-3 bg-body-tertiary was-validated">
         <%-- ---------------------------------- CHECKBOX AUTOASIGNAR----------------------------------------------------%>
         <div>
@@ -85,28 +85,28 @@
         </div>
 
 
-                    <div class="form-floating mb-3" style="display: none">
-                        <select name="tipoReporte" id="tipoReporte" class="form-control"
-                                placeholder="Reporte formulario index" required>
-                            <option disabled>SELECCIONA EL TIPO DE REPORTE</option>
-                            <option value="SOPORTE">SOPORTE</option>
-                        </select>
-                        <script>
-                            const select = document.getElementById('tipoReporte');
-                            select.addEventListener('change', function () {
-                                if (this.value === '' || this.value === 'SELECCIONA EL TIPO DE REPORTE') {
-                                    this.classList.add('is-invalid');
-                                } else {
-                                    this.classList.remove('is-invalid');
-                                }
-                            });
-                        </script>
+        <div class="form-floating mb-3" style="display: none">
+            <select name="tipoReporte" id="tipoReporte" class="form-control"
+                    placeholder="Reporte formulario index" required>
+                <option disabled>SELECCIONA EL TIPO DE REPORTE</option>
+                <option value="SOPORTE">SOPORTE</option>
+            </select>
+            <script>
+                const select = document.getElementById('tipoReporte');
+                select.addEventListener('change', function () {
+                    if (this.value === '' || this.value === 'SELECCIONA EL TIPO DE REPORTE') {
+                        this.classList.add('is-invalid');
+                    } else {
+                        this.classList.remove('is-invalid');
+                    }
+                });
+            </script>
 
-                        <label for="tipoReporte">Tipo de Reporte</label>
-                        <div class="invalid-feedback">
-                            Selecciona alguna de las opciones indicadas
-                        </div>
-                    </div>
+            <label for="tipoReporte">Tipo de Reporte</label>
+            <div class="invalid-feedback">
+                Selecciona alguna de las opciones indicadas
+            </div>
+        </div>
 
 
         <%-- ---------------------------------- CHECKBOX REPORTE A ASIGNAR ----------------------------------------------------%>

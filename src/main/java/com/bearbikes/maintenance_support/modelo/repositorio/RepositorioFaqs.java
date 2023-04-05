@@ -60,6 +60,7 @@ public class RepositorioFaqs{
     }
 
 
+
     public static class MapeadorFaqs {
         public static List<Faq> mapearFaqs(ResultSet rs) throws SQLException {
             List<Faq> listaReportes = new ArrayList<>();

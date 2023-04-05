@@ -1,4 +1,4 @@
-<%@ page import="com.bearbikes.maintenance_support.modelo.Reporte" %>
+ï»¿<%@ page import="com.bearbikes.maintenance_support.modelo.Reporte" %>
 <%@ page
         import="java.util.List" %><%-- ---------------------------------- FORMULARIO AÑADIR REPORTE SOPORTE----------------------------------------------------%>
 <%

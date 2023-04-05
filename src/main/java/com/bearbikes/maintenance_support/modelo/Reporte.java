@@ -61,19 +61,18 @@ public class Reporte {
 
 
     public enum TipoReporte {
+        SIN_ESPECIFICAR,
         MANTENIMIENTO,
         SOPORTE
     }
     public enum StatusReporte {
-        ABIERTO_SOPORTE,
-        EN_PROCESO_SOPORTE,
-        CERRADO,
-        SOLUCIONADO_SOPORTE,
-        RECIBIDO_MANTENIMIENTO,
-        PENDIENTE_MANTENIMIENTO,
+        ABIERTO,
+        EN_PROCESO,
+        SOLUCIONADO,
         ASIGNADO_MANTENIMIENTO,
-        EN_IMPLEMENTACION_MANTENIMIENTO,
-        IMPLEMENTADO_MANTENIMIENTO
+        IMPLEMENTADO_MANTENIMIENTO,
+        VERIFICADO,
+        CERRADO
     }
 
 }
