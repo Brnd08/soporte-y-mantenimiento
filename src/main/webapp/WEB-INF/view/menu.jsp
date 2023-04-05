@@ -70,7 +70,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"<% if (!modulos.contains(TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
+                <a class="nav-link" href="#seccion-asignar-reporte-mantenimiento-ingeniero"<% if (!modulos.contains(TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
                    style="display: none;" <% } %>>
                     <span data-feather="user-check" style="height:20px; width:36px;"class="align-text-bottom text-secondary"></span>
                     Asignar Ingeniero<br> Mantenimiento
@@ -78,28 +78,28 @@
             </li>
             <li class="nav-item"<% if (!modulos.contains(TipoUsuario.INGENIERO_MANTENIMIENTO)) { %>
                 style="display: none;" <% } %>>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#seccion-resolver-reporte-mantenimiento-asignado">
                     <span data-feather="file-text" style="height:20px; width:36px;"class="align-text-bottom text-secondary"></span>
                     Reportes Asignados
                 </a>
             </li>
             <li class="nav-item"<% if (!modulos.contains(TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
                 style="display: none;" <% } %>>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#seccion-informar-reporte-mantenimiento-solucionado">
                     <span data-feather="check-square" style="height:20px; width:36px;"class="align-text-bottom text-secondary"></span>
                     Mantenimientos<br> Programados
                 </a>
             </li>
             <li class="nav-item"<% if (!modulos.contains(TipoUsuario.GERENTE_SOPORTE)) { %>
                 style="display: none;" <% } %>>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#seccion-asignar-reporte-mantenimiento-solucionado">
                     <span data-feather="check-square" style="height:20px; width:36px;"class="align-text-bottom text-secondary"></span>
                     Mantenimientos<br> Implementados
                 </a>
             </li>
             <li class="nav-item"<% if (!modulos.contains(TipoUsuario.INGENIERO_SOPORTE)) { %>
                 style="display: none;" <% } %>>
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#seccion-devolver-reporte-mantenimiento-solucionado">
                     <span data-feather="send" style="height:20px; width:36px;"class="align-text-bottom text-secondary"></span>
                     Enviar de vuelta
                 </a>

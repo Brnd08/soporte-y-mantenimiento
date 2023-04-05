@@ -1,7 +1,7 @@
 drop database if exists pruebas;
 create database pruebas;
 use pruebas;
-
+show databases;
 DROP PROCEDURE IF EXISTS debug_msg ;
 DELIMITER $$
 CREATE PROCEDURE debug_msg(property VARCHAR(50), msg VARCHAR(255))
@@ -29,7 +29,7 @@ INSERT INTO TipoUsuarios values
     
 create table Usuarios (
 	id_usuario int not null auto_increment primary key,    
-	email_usuario varchar(30) not null unique,
+	email_usuario varchar(50) not null unique,
 	password_usuario varchar(200) not null,    
     nombre_usuario varchar(40) not null,
 	tipo_usuario varchar(30) not null default 'EDITOR' references TipoUsuarios(tipo)
@@ -65,8 +65,8 @@ INSERT INTO  statusReportes (status) values
 create table reportes(
 	id_reporte int primary key auto_increment,
     email_usuario varchar(30) not null,
-    nombre_reporte varchar(20)not null,
-    status_reporte varchar(30) not null default 'ABIERTO_SOPORTE'references statusReportes(status),
+    nombre_reporte varchar(40)not null,
+    status_reporte varchar(100) not null default 'ABIERTO_SOPORTE'references statusReportes(status),
     pregunta_reporte varchar(100) not null,
     solucion_reporte varchar(150) default 'Solución Pendiente',
     fecha_reporte timestamp not null default now(),
@@ -92,11 +92,7 @@ create table usuario_reporte(
 select distinct * from usuario_reporte;
 SELECT DISTINCT id_reporte FROM usuario_reporte WHERE id_usuario = (2);
 
-INSERT INTO faqs (pregunta, respuesta)
-VALUES(
-	(SELECT pregunta_reporte from reportes where id_reporte = 1), 
-    (SELECT solucion_reporte from reportes where id_reporte = 1)
-);
+
 
         INSERT INTO faqs (pregunta, respuesta) 
         SELECT pregunta_reporte, solucion_reporte
@@ -108,3 +104,5 @@ select distinct * from reportes;
 SELECT usuario_reporte.id_reporte, reportes.status_reporte FROM usuario_reporte, reportes WHERE usuario_reporte.id_usuario = 2 and usuario_reporte.id_reporte=reportes.id_reporte AND reportes.status_reporte = 'EN_PROCESO_SOPORTE';
 SELECT distinct usuario_reporte.id_reporte, reportes.status_reporte FROM usuario_reporte, reportes WHERE usuario_reporte.id_usuario = 4 and usuario_reporte.id_reporte=reportes.id_reporte AND reportes.status_reporte = 'EN_PROCESO_SOPORTE';
 SELECT DISTINCT * from reportes WHERE reportes.status_reporte = 'EN_PROCESO_SOPORTE';
+select * from reportes;
+-- UPDATE reportes SET status_reporte = 'RECIBIDO_MANTENIMIENTO' where id_reporte = (?);

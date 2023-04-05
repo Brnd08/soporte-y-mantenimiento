@@ -65,8 +65,8 @@
         </div>
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2">Features</a></li>
-            <li><a href="/FAQs" class="nav-link px-2">FAQs</a></li>
+            <li><a href="#" class="nav-link px-2">Dashboard</a></li>
+            <li><a href="/faqs" class="nav-link px-2">FAQs</a></li>
             <li><a href="/#about" class="nav-link px-2">About</a></li>
         </ul>
         <div class="col-md-3 text-end">
@@ -168,7 +168,7 @@
             <%-- ----------------------------------FORMUALRIO SOLUCION REPORTE MANTENIMIENTO ----------------------------------------------------%>
             <div id="seccion-resolver-reporte-mantenimiento-asignado" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_MANTENIMIENTO)) { %>
                  style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>
+                <jsp:include page="dashboardForms/mantenimiento/ReportesAsignados.jsp"/>
                 <br>
                 <hr>
                 <br>
@@ -176,7 +176,7 @@
             <%-- ----------------------------------FORMUALRIO INFORMAR REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
             <div id="seccion-informar-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
                  style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>
+                <jsp:include page="dashboardForms/mantenimiento/Solucionados.jsp"/>
                 <br>
                 <hr>
                 <br>
@@ -184,7 +184,7 @@
             <%-- ----------------------------------FORMUALRIO ASIGNAR REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
             <div id="seccion-asignar-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>
                  style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>
+                <jsp:include page="dashboardForms/mantenimiento/Solucionados.jsp"/>
                 <br>
                 <hr>
                 <br>
