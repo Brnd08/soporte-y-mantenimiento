@@ -92,7 +92,7 @@
             </li>
             <li class="nav-item"<% if (!modulos.contains(TipoUsuario.GERENTE_SOPORTE)) { %>
                 style="display: none;" <% } %>>
-                <a class="nav-link" href="#seccion-asignar-reporte-mantenimiento-solucionado">
+                <a class="nav-link" href="#seccion-asignar-ingeniero-soporte-solucionado">
                     <span data-feather="check-square" style="height:20px; width:36px;"class="align-text-bottom text-secondary"></span>
                     Mantenimientos<br> Implementados
                 </a>

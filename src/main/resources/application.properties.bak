@@ -11,11 +11,3 @@ server.address=127.0.0.1
 spring.mvc.view.prefix=/WEB-INF/view/
 spring.mvc.view.suffix=.jsp
 spring.web.resources.static-locations=classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/webapp/
-
-
-
-# spring boot dev tools configurations
-spring.devtools.restart.additional-paths=/webapp/
-
-# colorized output config
-spring.output.ansi.enabled=ALWAYS

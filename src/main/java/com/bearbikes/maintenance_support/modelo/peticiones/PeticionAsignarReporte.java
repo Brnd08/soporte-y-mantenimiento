@@ -2,5 +2,5 @@ package com.bearbikes.maintenance_support.modelo.peticiones;
 
 import java.util.Optional;
 
-public record PeticionAsignarReporteSoporte(Optional<Integer> idUsuario, int idReporte, String tipoReporte) {
+public record PeticionAsignarReporte(Optional<Integer> idUsuario, int idReporte, String tipoReporte) {
 }

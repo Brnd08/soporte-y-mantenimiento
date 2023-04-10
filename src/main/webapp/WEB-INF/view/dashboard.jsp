@@ -65,7 +65,7 @@
         </div>
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2">Dashboard</a></li>
+            <li><a href="/dashboard" class="nav-link px-2">Dashboard</a></li>
             <li><a href="/faqs" class="nav-link px-2">FAQs</a></li>
             <li><a href="/#about" class="nav-link px-2">About</a></li>
         </ul>
@@ -173,18 +173,26 @@
                 <hr>
                 <br>
             </div>
-            <%-- ----------------------------------FORMUALRIO INFORMAR REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
+            <%-- ----------------------------------FORMUALRIO INFORMAR REPORTE MANTENIMIENTO SOLUCIONADO a GERENTE SOPORTE----------------------------------------------------%>
             <div id="seccion-informar-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
                  style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/mantenimiento/Solucionados.jsp"/>
+                <jsp:include page="dashboardForms/mantenimiento/InformarGerenteSoporteSolucionados.jsp"/>
                 <br>
                 <hr>
                 <br>
             </div>
-            <%-- ----------------------------------FORMUALRIO ASIGNAR REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
-            <div id="seccion-asignar-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>
+<%--            &lt;%&ndash; ----------------------------------FORMUALRIO ASIGNAR REPORTE MANTENIMIENTO SOLUCIONADO--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-asignar-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/mantenimiento/Solucionados.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+            <%-- ----------------------------------FORMUALRIO DEVOLVER REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
+            <div id="seccion-asignar-ingeniero-soporte-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE)) { %>
                  style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/mantenimiento/Solucionados.jsp"/>
+                <jsp:include page="dashboardForms/mantenimiento/AsignarImplementado.jsp"/>
                 <br>
                 <hr>
                 <br>
@@ -192,7 +200,7 @@
             <%-- ----------------------------------FORMUALRIO DEVOLVER REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
             <div id="seccion-devolver-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE)) { %>
                  style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>
+                <jsp:include page="dashboardForms/mantenimiento/Solucionados.jsp"/>
                 <br>
                 <hr>
                 <br>

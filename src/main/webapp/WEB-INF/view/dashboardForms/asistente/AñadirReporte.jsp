@@ -1,8 +1,6 @@
 ﻿<%@ page import="com.bearbikes.maintenance_support.Utils" %><%-- ---------------------------------- FORMULARIO AÑADIR REPORTE SOPORTE----------------------------------------------------%>
     <%
 
-
-
         String errorRegistro = (String) session.getAttribute("errorRegistro");
         System.out.println(errorRegistro);
 
@@ -66,29 +64,29 @@
         </div>
         <%--     ------------------------------------   TIPO REPORTE --%>
 
-        <div class="form-floating mb-3">
-            <select name="tipoReporte" id="tipoReporte" class="form-control"
-                    placeholder="Reporte formulario index" required>
-                <option disabled>SELECCIONA EL TIPO DE REPORTE</option>
-                <option value="MANTENIMIENTO">MANTENIMIENTO</option>
-                <option value="SOPORTE">SOPORTE</option>
-            </select>
-            <script>
-                const select = document.getElementById('tipoReporte');
-                select.addEventListener('change', function () {
-                    if (this.value === '' || this.value === 'SELECCIONA EL TIPO DE REPORTE') {
-                        this.classList.add('is-invalid');
-                    } else {
-                        this.classList.remove('is-invalid');
-                    }
-                });
-            </script>
+<%--        <div class="form-floating mb-3">--%>
+<%--            <select name="tipoReporte" id="tipoReporte" class="form-control"--%>
+<%--                    placeholder="Reporte formulario index" required>--%>
+<%--                <option disabled>SELECCIONA EL TIPO DE REPORTE</option>--%>
+<%--                <option value="MANTENIMIENTO">MANTENIMIENTO</option>--%>
+<%--                <option value="SOPORTE">SOPORTE</option>--%>
+<%--            </select>--%>
+<%--            <script>--%>
+<%--                const select = document.getElementById('tipoReporte');--%>
+<%--                select.addEventListener('change', function () {--%>
+<%--                    if (this.value === '' || this.value === 'SELECCIONA EL TIPO DE REPORTE') {--%>
+<%--                        this.classList.add('is-invalid');--%>
+<%--                    } else {--%>
+<%--                        this.classList.remove('is-invalid');--%>
+<%--                    }--%>
+<%--                });--%>
+<%--            </script>--%>
 
-            <label for="tipoReporte">Tipo de Reporte</label>
-            <div class="invalid-feedback">
-                Selecciona alguna de las opciones indicadas
-            </div>
-        </div>
+<%--            <label for="tipoReporte">Tipo de Reporte</label>--%>
+<%--            <div class="invalid-feedback">--%>
+<%--                Selecciona alguna de las opciones indicadas--%>
+<%--            </div>--%>
+<%--        </div>--%>
         <%--     ------------------------------------   PREGUNTA REPORTE --%>
 
         <div class="form-floating mb-3">

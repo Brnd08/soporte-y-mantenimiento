@@ -87,9 +87,9 @@ public class ControladorDashboard {
         return dashboardConAtributosDeSesion(session, usuarioActivo);
     }
 
-    @PostMapping("/asignar-ingenierio-soporte")
+    @PostMapping("/asignar-reporte")
     public String asignarReporte(Model parametros, HttpSession session,
-            @ModelAttribute PeticionAsignarReporteSoporte peticionAsignarReporteSoporte){
+            @ModelAttribute PeticionAsignarReporte peticionAsignarReporteSoporte){
         parametros.addAttribute("sesion activa", true);
         Usuario usuarioActivo = (Usuario) session.getAttribute("usuario sesión");
         List<Usuario.TipoUsuario> rolesUsuario = (List<Usuario.TipoUsuario>) session.getAttribute("roles");
@@ -112,6 +112,31 @@ public class ControladorDashboard {
         return dashboardConAtributosDeSesion(session, usuarioActivo);
     }
     
+@PostMapping("/asignar-reporte-implementado")
+    public String asignarReporteImplementado(Model parametros, HttpSession session,
+            @ModelAttribute AsignarImplementado peticionAsignarImplementado){
+        parametros.addAttribute("sesion activa", true);
+        Usuario usuarioActivo = (Usuario) session.getAttribute("usuario sesión");
+        List<Usuario.TipoUsuario> rolesUsuario = (List<Usuario.TipoUsuario>) session.getAttribute("roles");
+        if (usuarioActivo == null || rolesUsuario == null) {
+            return "redirect:/login";
+        }
+
+        System.out.println(peticionAsignarImplementado);
+        try {
+            boolean asignacionExitosa = repositorioReportes.asignarReporteImplementado(peticionAsignarImplementado,
+                    usuarioActivo.getId());
+            System.out.println("asignacionExitosa? =>" + asignacionExitosa);
+            session.setAttribute("exitoResolucionReporteMantenimiento", "se asigno correctamente al usuario");
+        } catch (SQLException e) {
+            session.setAttribute("errorResolucionReporteMantenimiento", e.getMessage());
+
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return dashboardConAtributosDeSesion(session, usuarioActivo);
+    }
+
 
     @PostMapping("/asignar-reporte-gerente-mantenimiento")
     public String asignarReporteMantenimientoGerente(Model parametros, HttpSession session,
@@ -272,10 +297,36 @@ public class ControladorDashboard {
         return dashboardConAtributosDeSesion(session, usuarioActivo);
     }
 
+    @PostMapping("/verificar-solucionado")
+    public String agregarNuevaFaq(Model parametros, HttpSession session,
+            @ModelAttribute PeticionVerificarSolucionado peticionVerificarSolucionado) {
+        parametros.addAttribute("sesion activa", true);
+        Usuario usuarioActivo = (Usuario) session.getAttribute("usuario sesión");
+        List<Usuario.TipoUsuario> rolesUsuario = (List<Usuario.TipoUsuario>) session.getAttribute("roles");
+        if (usuarioActivo == null || rolesUsuario == null) {
+            return "redirect:/login";
+        }
+
+        System.out.println(peticionVerificarSolucionado);
+        try {
+            boolean registroFaqExitoso;
+
+                registroFaqExitoso = repositorioReportes.verificarReporteSolucionado(peticionVerificarSolucionado);
+                session.setAttribute("exitoAgregarFaq", "Se añadio la faq exitosamente");
+
+            System.out.println("registro faq exitosa ? =>" + registroFaqExitoso);
+        } catch (SQLException e) {
+                session.setAttribute("errorAgregarFaq1", e.getMessage());
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return dashboardConAtributosDeSesion(session, usuarioActivo);
+    }
+
     private String dashboardConAtributosDeSesion(HttpSession session, Usuario usuarioActivo) {
         try {
             session.setAttribute("reportes-soporte-abiertos", repositorioReportes.obtenerReportesPorTipoYStatus(
-                    Reporte.StatusReporte.ABIERTO_SOPORTE, Reporte.TipoReporte.SOPORTE));
+                    Reporte.StatusReporte.ABIERTO, Reporte.TipoReporte.SIN_ESPECIFICAR));
             session.setAttribute("ingenieros-soporte", repositorioUsuarios.obtenerPorTipoUsuario(
                     Usuario.TipoUsuario.INGENIERO_SOPORTE));
             session.setAttribute("reportes-soporte-asignados",
@@ -283,13 +334,17 @@ public class ControladorDashboard {
             session.setAttribute("reportes-solucionados-soporte",
                     repositorioReportes.obtenerReportesSoporteSolucionados());
             session.setAttribute("reportes-solucionados-mantenimiento",
-                    repositorioReportes.obtenerReportesSoporteSolucionados());
+                    repositorioReportes.obtenerReportesMantenimientoSolucionados());
+            session.setAttribute("reportes-verificados-mantenimiento",
+                    repositorioReportes.obtenerReportesMantenimientoVerificados());
             session.setAttribute("reportes-registrados", repositorioReportes.obtenerReportesRegistrados());
             session.setAttribute("reportes-cerrados",
                     repositorioReportes.obtenerReportesPorStatus(Reporte.StatusReporte.CERRADO));
             session.setAttribute("faqs-registradas", repositorioFaqs.obtenerFaqsRegistradas());
-            session.setAttribute("reportes-mantenimiento-abiertos", repositorioReportes.obtenerReportesPorTipoYStatus(Reporte.StatusReporte.RECIBIDO_MANTENIMIENTO, Reporte.TipoReporte.MANTENIMIENTO));
-            session.setAttribute("reportes-mantenimiento-asignados", repositorioReportes.obtenerReportesPorTipoYStatus(Reporte.StatusReporte.PENDIENTE_MANTENIMIENTO, Reporte.TipoReporte.MANTENIMIENTO));
+            session.setAttribute("reportes-mantenimiento-abiertos", repositorioReportes.obtenerReportesPorTipoYStatus(
+                    Reporte.StatusReporte.ABIERTO, Reporte.TipoReporte.SIN_ESPECIFICAR));
+            session.setAttribute("reportes-mantenimiento-asignados", repositorioReportes.obtenerReportesPorTipoYStatus(Reporte.StatusReporte.EN_PROCESO, Reporte.TipoReporte.MANTENIMIENTO));
+            session.setAttribute("reportes-mantenimiento-implementados", repositorioReportes.obtenerReportesPorTipoYStatus(Reporte.StatusReporte.IMPLEMENTADO_MANTENIMIENTO, Reporte.TipoReporte.MANTENIMIENTO));
             session.setAttribute("gerentes-mantenimiento", repositorioUsuarios.obtenerPorTipoUsuario(
                     Usuario.TipoUsuario.GERENTE_MANTENIMIENTO));
             session.setAttribute("ingenieros-mantenimiento", repositorioUsuarios.obtenerPorTipoUsuario(

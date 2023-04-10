@@ -47,7 +47,7 @@
 ﻿<%-- ---------------------------------- FORMULARIO ASIGNAR INGENIEBRIO----------------------------------------------------%>
 <h2>Asignar Reporte a gerente mantenimiento</h2>
 <div class="col-md-10 mx-auto col-lg-10">
-    <form method="post" action="/asignar-reporte-gerente-mantenimiento"
+    <form method="post" action="/asignar-reporte"
           class="p-4 p-md-5 border rounded-3 bg-body-tertiary was-validated">
         <%-- ---------------------------------- CHECKBOX AUTOASIGNAR----------------------------------------------------%>
         <div>
@@ -70,13 +70,13 @@
                     if (gerentesMantenimientoDisponibles != null) {
                         for (Usuario gerenteMantenimientoDisponible : gerentesMantenimientoDisponibles) {
                             out.print(
-                                    "<option value='" + gerenteMantenimientoDisponible.getId() + "'>" +
-                                        gerenteMantenimientoDisponible.toStringMostrar() +
-                                            "</option>"
+                                    "<option value='" + gerenteMantenimientoDisponible.getId() + "' >" + "GERENTE MANTENIMIENTO #" + gerenteMantenimientoDisponible.getId() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Nombre Ingeniero: " + gerenteMantenimientoDisponible.getNombre() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Tipo Usuario: " + gerenteMantenimientoDisponible.getTipoUsuario() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Email: " + gerenteMantenimientoDisponible.getEmail() +"</option>"
                             );
                         }
                     }
-
                 %>
             </select>
             <label for="gerenteMantenimientoAsignado">Usuario asignado</label>
@@ -84,6 +84,29 @@
                 Selecciona alguna de las opciones indicadas
             </div>
         </div>
+
+            <div class="form-floating mb-3" style="display: none">
+                <select name="tipoReporte" id="tipoReporte" class="form-control"
+                        placeholder="Reporte formulario index" required>
+                    <option disabled>SELECCIONA EL TIPO DE REPORTE</option>
+                    <option value="MANTENIMIENTO">MANTENIMIENTO</option>
+                </select>
+                <script>
+                    const select = document.getElementById('tipoReporte');
+                    select.addEventListener('change', function () {
+                        if (this.value === '' || this.value === 'SELECCIONA EL TIPO DE REPORTE') {
+                            this.classList.add('is-invalid');
+                        } else {
+                            this.classList.remove('is-invalid');
+                        }
+                    });
+                </script>
+
+                <label for="tipoReporte">Tipo de Reporte</label>
+                <div class="invalid-feedback">
+                    Selecciona alguna de las opciones indicadas
+                </div>
+            </div>
         <%-- ---------------------------------- CHECKBOX REPORTE A ASIGNAR ----------------------------------------------------%>
 
         <div class="form-floating mb-3">
@@ -92,15 +115,16 @@
                 <option disabled>SELECCIONA EL REPORTE A ASIGNAR</option>
                 <%
                     if (reportesAbiertos != null) {
-                        for (Reporte reporte : reportesAbiertos) {
+                        for (Reporte reporteAsignado : reportesAbiertos) {
                             out.print(
-                                    "<option value='" + reporte.getId() + "'>" +
-                                            reporte.toStringMostrar() +
-                                            "</option>"
+                                    "<option value='" + reporteAsignado.getId() + "' >" + "REPORTE #" + reporteAsignado.getId() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Nombre Reporte: " + reporteAsignado.getNombre() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Email Usuario: " + reporteAsignado.getEmailUsuario() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Pregunta: " + reporteAsignado.getPregunta() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Status: " + reporteAsignado.getStatus() +"</option>"
                             );
                         }
                     }
-
                 %>
             </select>
             <label for="reporteMantenimientoAsignado">Reporte asignado</label>

@@ -1,11 +1,11 @@
-﻿<%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %>
 <%@ page
         import="com.bearbikes.maintenance_support.modelo.Reporte" %>
 <%@ page import="com.bearbikes.maintenance_support.modelo.usuarios.Usuario" %>
 <%@ page import="com.bearbikes.maintenance_support.modelo.usuarios.IngenieroSoporte" %><%-- ---------------------------------- FORMULARIO ASIGNAR INGENIEBRIO----------------------------------------------------%>
 
 <%
-    List<Reporte> reportesAbiertos = (List<Reporte>) session.getAttribute("reportes-soporte-abiertos");
+    List<Reporte> reportesAbiertos = (List<Reporte>) session.getAttribute("reportes-mantenimiento-implementados");
     System.out.println(reportesAbiertos);
 
     List<Usuario> ingenieroDisponibles = (List<Usuario>) session.getAttribute("ingenieros-soporte");
@@ -44,69 +44,70 @@
                     "</div>";
 
 %>
-<h2>Asignar a ingeniero soporte</h2>
+<h2>Asignar a ingeniero Soporte</h2>
 <div class="col-md-10 mx-auto col-lg-10">
-    <form method="post" action="/asignar-reporte"
+    <form method="post" action="/asignar-reporte-implementado"
           class="p-4 p-md-5 border rounded-3 bg-body-tertiary was-validated">
         <%-- ---------------------------------- CHECKBOX AUTOASIGNAR----------------------------------------------------%>
         <div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="usuarioAsignado" id="autoAsignarse" checked>
-                <label class="form-check-label" for="autoAsignarse">Autoasignarse Reporte</label>
+                <input class="form-check-input" type="radio" name="ingenieroSoporteAsignadoImplementado" id="autoAsignarseImplementado" checked>
+                <label class="form-check-label" for="autoAsignarseImplementado">Autoasignarse Reporte</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="usuarioAsignado" id="asignarOtro">
-                <label class="form-check-label" for="asignarOtro">Asignar a otro usuario</label>
+                <input class="form-check-input" type="radio" name="ingenieroSoporteAsignadoImplementado" id="asignarOtroImplementado">
+                <label class="form-check-label" for="asignarOtroImplementado">Asignar a otro usuario</label>
             </div>
         </div>
         <%-- ---------------------------------- CHECKBOX USUARIO A ASIGNAR ----------------------------------------------------%>
 
-        <div id="divUsuarioAsignar" class="form-floating mb-3" style="display: none">
-            <select name="idUsuario" id="usuarioAsignado" class="form-control"
+        <div id="divUsuarioAsignarImplementado" class="form-floating mb-3" style="display: none">
+            <select name="idUsuario" id="ingenieroSoporteAsignadoImplementado" class="form-control"
                     placeholder="Reporte formulario index" required disabled>
                 <option disabled>SELECCIONA EL INGENIERO A ASIGNAR</option>
                 <%
                     if (ingenieroDisponibles != null) {
                         for (Usuario ingeniero : ingenieroDisponibles) {
                             out.print(
-                                    "<option value='" + ingeniero.getId() + "'>" +
-                                            ingeniero.toStringMostrar() +
-                                            "</option>"
+                                    "<option value='" + ingeniero.getId() + "' >" + "INGENIERO SOPORTE #" + ingeniero.getId() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Nombre Ingeniero: " + ingeniero.getNombre() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Tipo Usuario: " + ingeniero.getTipoUsuario() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Email: " + ingeniero.getEmail() +"</option>"
                             );
                         }
                     }
 
                 %>
             </select>
-            <label for="usuarioAsignado">Usuario asignado</label>
+            <label for="ingenieroSoporteAsignadoImplementado">Usuario asignado</label>
             <div class="invalid-feedback">
                 Selecciona alguna de las opciones indicadas
             </div>
         </div>
 
 
-                    <div class="form-floating mb-3" style="display: none">
-                        <select name="tipoReporte" id="tipoReporte" class="form-control"
-                                placeholder="Reporte formulario index" required>
-                            <option disabled>SELECCIONA EL TIPO DE REPORTE</option>
-                            <option value="SOPORTE">SOPORTE</option>
-                        </select>
-                        <script>
-                            const select = document.getElementById('tipoReporte');
-                            select.addEventListener('change', function () {
-                                if (this.value === '' || this.value === 'SELECCIONA EL TIPO DE REPORTE') {
-                                    this.classList.add('is-invalid');
-                                } else {
-                                    this.classList.remove('is-invalid');
-                                }
-                            });
-                        </script>
+        <div class="form-floating mb-3" style="display: none">
+            <select name="tipoReporte" id="tipoReporte" class="form-control"
+                    placeholder="Reporte formulario index" required>
+                <option disabled>SELECCIONA EL TIPO DE REPORTE</option>
+                <option value="SOPORTE">SOPORTE</option>
+            </select>
+            <script>
+                const selectTipoReporte3 = document.getElementById('tipoReporte');
+                selectTipoReporte3.addEventListener('change', function () {
+                    if (this.value === '' || this.value === 'SELECCIONA EL TIPO DE REPORTE') {
+                        this.classList.add('is-invalid');
+                    } else {
+                        this.classList.remove('is-invalid');
+                    }
+                });
+            </script>
 
-                        <label for="tipoReporte">Tipo de Reporte</label>
-                        <div class="invalid-feedback">
-                            Selecciona alguna de las opciones indicadas
-                        </div>
-                    </div>
+            <label for="tipoReporte">Tipo de Reporte</label>
+            <div class="invalid-feedback">
+                Selecciona alguna de las opciones indicadas
+            </div>
+        </div>
 
 
         <%-- ---------------------------------- CHECKBOX REPORTE A ASIGNAR ----------------------------------------------------%>
@@ -117,11 +118,13 @@
                 <option disabled>SELECCIONA EL REPORTE A ASIGNAR</option>
                 <%
                     if (reportesAbiertos != null) {
-                        for (Reporte reporte : reportesAbiertos) {
+                        for (Reporte reporteAsignado : reportesAbiertos) {
                             out.print(
-                                    "<option value='" + reporte.getId() + "'>" +
-                                            reporte.toStringMostrar() +
-                                            "</option>"
+                                    "<option value='" + reporteAsignado.getId() + "' >" + "REPORTE #" + reporteAsignado.getId() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Nombre Reporte: " + reporteAsignado.getNombre() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Email Usuario: " + reporteAsignado.getEmailUsuario() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Pregunta: " + reporteAsignado.getPregunta() +"</option>"+
+                                            "<option disabled > &nbsp;&nbsp;&nbsp; Status: " + reporteAsignado.getStatus() +"</option>"
                             );
                         }
                     }
@@ -135,18 +138,18 @@
         </div>
 
         <script>
-            const checkboxAsignarOtro = document.getElementById("asignarOtro");
-            const checkboxAutoAsignar = document.getElementById("autoAsignarse");
-            const divUsuarioAsignar = document.getElementById("divUsuarioAsignar");
-            const usuarioAsignado = document.getElementById("usuarioAsignado");
+            const asignarOtroImplementado = document.getElementById("asignarOtroImplementado");
+            const autoAsignarseImplementado = document.getElementById("autoAsignarseImplementado");
+            const divUsuarioAsignarImplementado = document.getElementById("divUsuarioAsignarImplementado");
+            const ingenieroSoporteAsignadoImplementado = document.getElementById("ingenieroSoporteAsignadoImplementado");
 
-            checkboxAsignarOtro.addEventListener("change", ev => {
-                divUsuarioAsignar.style.display = 'inherit'
-                usuarioAsignado.disabled = false;
+            asignarOtroImplementado.addEventListener("change", ev => {
+                divUsuarioAsignarImplementado.style.display = 'inherit'
+                ingenieroSoporteAsignadoImplementado.disabled = false;
             })
-            checkboxAutoAsignar.addEventListener("change", ev => {
-                divUsuarioAsignar.style.display = 'none'
-                usuarioAsignado.disabled = true;
+            autoAsignarseImplementado.addEventListener("change", ev => {
+                divUsuarioAsignarImplementado.style.display = 'none'
+                ingenieroSoporteAsignadoImplementado.disabled = true;
             })
         </script>
 

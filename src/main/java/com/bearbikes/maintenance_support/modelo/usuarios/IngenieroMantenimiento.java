@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 public class IngenieroMantenimiento extends Usuario{
 
     public IngenieroMantenimiento(String email, String contraseña, String nombre){
-        super(email, contraseña, nombre, TipoUsuario.INGENIERO_SOPORTE);
+        super(email, contraseña, nombre, TipoUsuario.INGENIERO_MANTENIMIENTO);
     }
 
     @Override

@@ -51,14 +51,11 @@ create table statusReportes(
 	status varchar (40) primary key not null
 );
 INSERT INTO  statusReportes (status) values
-('ABIERTO_SOPORTE'),
-('EN_PROCESO_SOPORTE'),
-('SOLUCIONADO_SOPORTE'),
+('ABIERTO'),
+('EN_PROCESO'),
+('SOLUCIONADO'),
 ('CERRADO'),
-('RECIBIDO_MANTENIMIENTO'),
-('PENDIENTE_MANTENIMIENTO'),
 ('ASIGNADO_MANTENIMIENTO'),
-('EN_IMPLEMENTACION_MANTENIMIENTO'),
 ('IMPLEMENTADO_MANTENIMIENTO');
 
 -- drop table reportes;
@@ -66,14 +63,14 @@ create table reportes(
 	id_reporte int primary key auto_increment,
     email_usuario varchar(30) not null,
     nombre_reporte varchar(40)not null,
-    status_reporte varchar(100) not null default 'ABIERTO_SOPORTE'references statusReportes(status),
+    status_reporte varchar(100) not null default 'ABIERTO'references statusReportes(status),
     pregunta_reporte varchar(100) not null,
     solucion_reporte varchar(150) default 'Solución Pendiente',
     fecha_reporte timestamp not null default now(),
-    tipo_reporte varchar(30) not null default 'MANTENIMIENTO',
+    tipo_reporte varchar(30) not null default 'SIN_ESPECIFICAR',
     enviado boolean default false   
 );
-SELECT * FROM reportes WHERE status_reporte = ('ABIERTO_SOPORTE') AND tipo_reporte = 'MANTENIMIENTO';
+SELECT * FROM reportes WHERE status_reporte = ('ABIERTO') AND tipo_reporte = 'MANTENIMIENTO';
     
 SELECT * FROM reportes ; 
 SELECT * FROM reportes WHERE tipo_reporte = 'MANTENIMIENTO';
@@ -101,8 +98,8 @@ SELECT DISTINCT id_reporte FROM usuario_reporte WHERE id_usuario = (2);
 SELECT * FROM faqs ;
 
 select distinct * from reportes;
-SELECT usuario_reporte.id_reporte, reportes.status_reporte FROM usuario_reporte, reportes WHERE usuario_reporte.id_usuario = 2 and usuario_reporte.id_reporte=reportes.id_reporte AND reportes.status_reporte = 'EN_PROCESO_SOPORTE';
-SELECT distinct usuario_reporte.id_reporte, reportes.status_reporte FROM usuario_reporte, reportes WHERE usuario_reporte.id_usuario = 4 and usuario_reporte.id_reporte=reportes.id_reporte AND reportes.status_reporte = 'EN_PROCESO_SOPORTE';
-SELECT DISTINCT * from reportes WHERE reportes.status_reporte = 'EN_PROCESO_SOPORTE';
+SELECT usuario_reporte.id_reporte, reportes.status_reporte FROM usuario_reporte, reportes WHERE usuario_reporte.id_usuario = 2 and usuario_reporte.id_reporte=reportes.id_reporte AND reportes.status_reporte = 'EN_PROCESO';
+SELECT distinct usuario_reporte.id_reporte, reportes.status_reporte FROM usuario_reporte, reportes WHERE usuario_reporte.id_usuario = 4 and usuario_reporte.id_reporte=reportes.id_reporte AND reportes.status_reporte = 'EN_PROCESO';
+SELECT DISTINCT * from reportes WHERE reportes.status_reporte = 'EN_PROCESO';
 select * from reportes;
--- UPDATE reportes SET status_reporte = 'RECIBIDO_MANTENIMIENTO' where id_reporte = (?);
+-- UPDATE reportes SET status_reporte = 'ABIERTO' where id_reporte = (?);

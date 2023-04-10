@@ -3,7 +3,7 @@
         import="java.util.List" %>
     <%-- ---------------------------------- FORMULARIO A�ADIR REPORTE SOPORTE----------------------------------------------------%>
 <%
-    List<Reporte> reportesResueltos = (List<Reporte>) session.getAttribute("reportes-verificados-mantenimiento");
+    List<Reporte> reportesResueltos = (List<Reporte>) session.getAttribute("reportes-solucionados-mantenimiento");
     System.out.println("reportesResueltos " + reportesResueltos);
 
     String errorDevolucionReporteSoporte = (String) session.getAttribute("errorDevolucionReporteMantenimiento");
@@ -38,7 +38,7 @@
 
 
 %>
-<h2>Mandar solucion al usuario</h2>
+<h2>Mantenimientos Ya Programados</h2>
 <div class="col-md-10 mx-auto col-lg-10">
     <form method="post" action="/devolver-reporte"
           class="p-4 p-md-5 border rounded-3 bg-body-tertiary was-validated">
