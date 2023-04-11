@@ -51,15 +51,18 @@
         <%-- ---------------------------------- CHECKBOX AUTOASIGNAR----------------------------------------------------%>
         <div>
             <div class="form-check">
+
                 <input class="form-check-input" type="radio" name="ingenieroSoporteAsignadoImplementado" id="autoAsignarseImplementado" checked>
                 <label class="form-check-label" for="autoAsignarseImplementado">Autoasignarse Reporte</label>
             </div>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="ingenieroSoporteAsignadoImplementado" id="asignarOtroImplementado">
                 <label class="form-check-label" for="asignarOtroImplementado">Asignar a otro usuario</label>
+
             </div>
         </div>
         <%-- ---------------------------------- CHECKBOX USUARIO A ASIGNAR ----------------------------------------------------%>
+
 
         <div id="divUsuarioAsignarImplementado" class="form-floating mb-3" style="display: none">
             <select name="idUsuario" id="ingenieroSoporteAsignadoImplementado" class="form-control"
@@ -69,6 +72,7 @@
                     if (ingenieroDisponibles != null) {
                         for (Usuario ingeniero : ingenieroDisponibles) {
                             out.print(
+
                                     "<option value='" + ingeniero.getId() + "' >" + "INGENIERO SOPORTE #" + ingeniero.getId() +"</option>"+
                                             "<option disabled > &nbsp;&nbsp;&nbsp; Nombre Ingeniero: " + ingeniero.getNombre() +"</option>"+
                                             "<option disabled > &nbsp;&nbsp;&nbsp; Tipo Usuario: " + ingeniero.getTipoUsuario() +"</option>"+
@@ -79,6 +83,7 @@
 
                 %>
             </select>
+
             <label for="ingenieroSoporteAsignadoImplementado">Usuario asignado</label>
             <div class="invalid-feedback">
                 Selecciona alguna de las opciones indicadas
@@ -93,6 +98,7 @@
                 <option value="SOPORTE">SOPORTE</option>
             </select>
             <script>
+
                 const selectTipoReporte3 = document.getElementById('tipoReporte');
                 selectTipoReporte3.addEventListener('change', function () {
                     if (this.value === '' || this.value === 'SELECCIONA EL TIPO DE REPORTE') {
@@ -118,6 +124,7 @@
                 <option disabled>SELECCIONA EL REPORTE A ASIGNAR</option>
                 <%
                     if (reportesAbiertos != null) {
+
                         for (Reporte reporteAsignado : reportesAbiertos) {
                             out.print(
                                     "<option value='" + reporteAsignado.getId() + "' >" + "REPORTE #" + reporteAsignado.getId() +"</option>"+
@@ -138,6 +145,7 @@
         </div>
 
         <script>
+
             const asignarOtroImplementado = document.getElementById("asignarOtroImplementado");
             const autoAsignarseImplementado = document.getElementById("autoAsignarseImplementado");
             const divUsuarioAsignarImplementado = document.getElementById("divUsuarioAsignarImplementado");
@@ -154,6 +162,7 @@
         </script>
 
         <%-- ---------------------------------- SCRIPT OCULTAR CHECKBOX ----------------------------------------------------%>
+
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Asignar</button>
 
