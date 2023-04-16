@@ -329,6 +329,8 @@ public class ControladorDashboard {
                     Reporte.StatusReporte.ABIERTO, Reporte.TipoReporte.SIN_ESPECIFICAR));
             session.setAttribute("ingenieros-soporte", repositorioUsuarios.obtenerPorTipoUsuario(
                     Usuario.TipoUsuario.INGENIERO_SOPORTE));
+            session.setAttribute("usuarios-registrados", repositorioUsuarios.obtenerPorTipoUsuario(
+                    Usuario.TipoUsuario.USUARIO));
             session.setAttribute("reportes-soporte-asignados",
                     repositorioReportes.obtenerReportesSoporteAsignados(usuarioActivo.getId()));
             session.setAttribute("reportes-solucionados-soporte",
@@ -343,7 +345,8 @@ public class ControladorDashboard {
             session.setAttribute("faqs-registradas", repositorioFaqs.obtenerFaqsRegistradas());
             session.setAttribute("reportes-mantenimiento-abiertos", repositorioReportes.obtenerReportesPorTipoYStatus(
                     Reporte.StatusReporte.ABIERTO, Reporte.TipoReporte.SIN_ESPECIFICAR));
-            session.setAttribute("reportes-mantenimiento-asignados", repositorioReportes.obtenerReportesPorTipoYStatus(Reporte.StatusReporte.EN_PROCESO, Reporte.TipoReporte.MANTENIMIENTO));
+            session.setAttribute("reportes-mantenimiento-en-proceso", repositorioReportes.obtenerReportesPorTipoYStatus(Reporte.StatusReporte.EN_PROCESO, Reporte.TipoReporte.MANTENIMIENTO));
+            session.setAttribute("reportes-mantenimiento-asignados", repositorioReportes.obtenerReportesPorTipoYStatus(Reporte.StatusReporte.EN_PROGRAMACIÓN, Reporte.TipoReporte.MANTENIMIENTO));
             session.setAttribute("reportes-mantenimiento-implementados", repositorioReportes.obtenerReportesPorTipoYStatus(Reporte.StatusReporte.IMPLEMENTADO_MANTENIMIENTO, Reporte.TipoReporte.MANTENIMIENTO));
             session.setAttribute("gerentes-mantenimiento", repositorioUsuarios.obtenerPorTipoUsuario(
                     Usuario.TipoUsuario.GERENTE_MANTENIMIENTO));

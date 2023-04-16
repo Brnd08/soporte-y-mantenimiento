@@ -20,6 +20,7 @@ public class RepositorioUsuarios {
     }
 
 
+
     public List<Usuario> obtenerPorTipoUsuario(Usuario.TipoUsuario tipo) throws SQLException {
         String sql = "select * from usuarios WHERE tipo_usuario = (?);";
         PreparedStatement preparedStatement= connectionBdd.prepareStatement(sql);
@@ -59,6 +60,7 @@ public class RepositorioUsuarios {
                 String email =  (rs.getString("email_usuario"));
 
                 switch (tipoUsuario){
+                    case USUARIO -> usuarioObtenido = new UsuarioSimple(email, contraseña, nombre);
                     case EDITOR -> usuarioObtenido = new Editor(email, contraseña, nombre);
                     case ASISTENTE -> usuarioObtenido = new Asistente(email, contraseña, nombre);
                     case GERENTE_SOPORTE -> usuarioObtenido = new GerenteSoporte(email, contraseña, nombre);

@@ -19,6 +19,24 @@
 
     String mensajeError = (String) request.getAttribute("Mensaje de Error");
 
+    boolean mostrarModuloAsistente = usuarioSesion.getTipoUsuario().equals(Usuario.TipoUsuario.ASISTENTE) ||
+            usuarioSesion.getTipoUsuario().equals(Usuario.TipoUsuario.GERENTE_SOPORTE);
+    boolean mostrarModuloSoporte =
+            usuarioSesion.getTipoUsuario().equals(Usuario.TipoUsuario.GERENTE_SOPORTE) ||
+                    usuarioSesion.getTipoUsuario().equals(Usuario.TipoUsuario.INGENIERO_SOPORTE);
+    boolean mostrarModuloMantenimiento =
+            usuarioSesion.getTipoUsuario().equals(Usuario.TipoUsuario.GERENTE_SOPORTE) ||
+                    usuarioSesion.getTipoUsuario().equals(Usuario.TipoUsuario.INGENIERO_SOPORTE) ||
+                    usuarioSesion.getTipoUsuario().equals(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO) ||
+                    usuarioSesion.getTipoUsuario().equals(Usuario.TipoUsuario.INGENIERO_MANTENIMIENTO);
+    boolean mostrarModuloEditor = usuarioSesion.getTipoUsuario().equals(Usuario.TipoUsuario.EDITOR) ||
+            usuarioSesion.getTipoUsuario().equals(Usuario.TipoUsuario.GERENTE_SOPORTE);
+
+    request.setAttribute("mostrarModuloAsistente", mostrarModuloAsistente);
+    request.setAttribute("mostrarModuloSoporte", mostrarModuloSoporte);
+    request.setAttribute("mostrarModuloMantenimiento", mostrarModuloMantenimiento);
+    request.setAttribute("mostrarModuloEditor", mostrarModuloEditor);
+
 
 %>
 <html lang="es" data-bs-theme="auto">
@@ -43,6 +61,7 @@
     </style>
 </head>
 <body>
+
 <jsp:include page="darkmode.jsp"/>
 
 <header class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow">
@@ -75,6 +94,7 @@
     </header>
 </div>
 <div class="container-fluid">
+
     <div class="row">
         <%-- ----------------------------------MENU NAVEGACION----------------------------------------------------%>
         <div id="navbar">
@@ -82,22 +102,21 @@
             <jsp:include page="menu.jsp"/>
         </div>
 
+        <%-- ----------------------------------ALERT BIENVENIDA----------------------------------------------------%>
         <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 Hola <%=usuarioSesion.getTipoUsuario().toString().replace("_", " ")%> <%=usuarioSesion.getNombre()%>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-
         </div>
 
 
+        <%-- ----------------------------------MODULO GENERAL----------------------------------------------------%>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"
-              id="moduloAsistente" <% if (!modulos.contains(Usuario.TipoUsuario.ASISTENTE)) { %>
-              style="display: none;" <% } %>>
-
-            <hr id="seccion-hr">
-            <h1>ASISTENTE</h1>
-            <hr id="seccion-hr">
+              id="moduloGeneral">
+            <hr>
+            <h1>General</h1>
+            <hr>
             <%-- ----------------------------------ASISTENTE MOSTRAR REPORTES----------------------------------------------------%>
             <div id="seccion_mostrar_registros">
                 <jsp:include page="dashboardForms/asistente/MostrarRegistros.jsp"/>
@@ -105,20 +124,31 @@
                 <hr>
                 <br>
             </div>
+        </main>
+
+
+        <%-- ----------------------------------MODULO ASISTENTE----------------------------------------------------%>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"
+              id="moduloAsistente" <% if (!mostrarModuloAsistente) { %>
+              style="display: none;" <% } %>>
+            <hr>
+            <h1>ASISTENTE</h1>
+            <hr>
             <%-- ----------------------------------ASISTENTE NUEVO REPORTE----------------------------------------------------%>
-            <div id="seccion-nuevo-reporte-soporte">
+            <div id="seccion-nuevo-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.ASISTENTE)) { %>
+                 style="display: none;" <% } %>>
                 <jsp:include page="dashboardForms/asistente/AñadirReporte.jsp"/>
                 <br>
                 <br>
             </div>
         </main>
 
-
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloSoporte">
-
-            <hr id="seccion-hr">
+        <%-- ----------------------------------MODULO SOPORTE----------------------------------------------------%>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloSoporte" <% if (!mostrarModuloSoporte) { %>
+              style="display: none;" <% } %>>
+            <hr>
             <h1>SOPORTE</h1>
-            <hr id="seccion-hr">
+            <hr>
             <%-- ----------------------------------FORMULARIO ASIGNAR REPORTE----------------------------------------------------%>
             <div id="seccion-asignar-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>
                  style="display: none;" <% } %>>
@@ -144,11 +174,12 @@
             <br>
             <br>
         </main>
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloMantenimiento">
-
-            <hr id="seccion-hr">
-            <h1>MATENIMIENTO</h1>
-            <hr id="seccion-hr">
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"
+              id="moduloMantenimiento" <% if (!mostrarModuloMantenimiento) { %>
+              style="display: none;" <% } %>>
+            <hr>
+            <h1>MANTENIMIENTO</h1>
+            <hr>
             <%-- ----------------------------------FORMULARIO ASIGNAR GERENTE MANTENIMIENTO----------------------------------------------------%>
             <div id="seccion-asignar-reporte-mantenimiento-gerente" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>
                  style="display: none;" <% } %>>
@@ -181,16 +212,8 @@
                 <hr>
                 <br>
             </div>
-<%--            &lt;%&ndash; ----------------------------------FORMUALRIO ASIGNAR REPORTE MANTENIMIENTO SOLUCIONADO--------------------------------------------------&ndash;%&gt;--%>
-<%--            <div id="seccion-asignar-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>--%>
-<%--                 style="display: none;" <% } %>>--%>
-<%--                <jsp:include page="dashboardForms/mantenimiento/Solucionados.jsp"/>--%>
-<%--                <br>--%>
-<%--                <hr>--%>
-<%--                <br>--%>
-<%--            </div>--%>
             <%-- ----------------------------------FORMUALRIO DEVOLVER REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
-            <div id="seccion-asignar-ingeniero-soporte-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE)) { %>
+            <div id="seccion-asignar-ingeniero-soporte-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
                  style="display: none;" <% } %>>
                 <jsp:include page="dashboardForms/mantenimiento/AsignarImplementado.jsp"/>
                 <br>
@@ -207,10 +230,11 @@
             </div>
             <br>
         </main>
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloFaqs">
-            <hr id="seccion-hr">
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloFaqs" <% if (!mostrarModuloEditor) { %>
+              style="display: none;" <% } %>>
+            <hr>
             <h1>FAQs</h1>
-            <hr id="seccion-hr">
+            <hr>
             <%-- ----------------------------------DESPLEGAR FAQs REGISTRADAS----------------------------------------------------%>
             <div id="seccion_mostrar_faqs" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
                  style="display: none;" <% } %>>
@@ -242,11 +266,6 @@
 
     </div>
 </div>
-
-
 <script src="../../bootstrap/bootstrap.bundle.min.js"></script>
-
-
-<%--<script src="../../js/dashboard.js"></script>--%>
 </body>
 </html>

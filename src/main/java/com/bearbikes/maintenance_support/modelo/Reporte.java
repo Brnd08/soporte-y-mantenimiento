@@ -68,6 +68,8 @@ public class Reporte {
     public enum StatusReporte {
         ABIERTO,
         EN_PROCESO,
+        EN_PROGRAMACIÓN,
+        PROGRAMADO,
         SOLUCIONADO,
         ASIGNADO_MANTENIMIENTO,
         IMPLEMENTADO_MANTENIMIENTO,

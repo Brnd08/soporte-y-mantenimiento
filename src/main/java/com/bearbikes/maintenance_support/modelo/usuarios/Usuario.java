@@ -59,6 +59,7 @@ public abstract class Usuario {
      * @see Usuario
      */
     public enum TipoUsuario {
+        USUARIO,
         GERENTE_MANTENIMIENTO,
         GERENTE_SOPORTE,
         INGENIERO_SOPORTE,

@@ -4,8 +4,8 @@
 <%@ page import="com.bearbikes.maintenance_support.modelo.usuarios.GerenteMantenimiento" %><%-- ---------------------------------- FORMULARIO ASIGNAR INGENIEBRIO----------------------------------------------------%>
 
 <%
-    List<Reporte> reportesAsignados = (List<Reporte>) session.getAttribute("reportes-mantenimiento-asignados");
-    System.out.println(reportesAsignados);
+    List<Reporte> reportesAsignar = (List<Reporte>) session.getAttribute("reportes-mantenimiento-en-proceso");
+    System.out.println(reportesAsignar);
 
     List<Usuario> ingenierosMantenimientoDisponibles = (List<Usuario>) session.getAttribute("ingenieros-mantenimiento");
     System.out.println(ingenierosMantenimientoDisponibles);
@@ -92,8 +92,8 @@
                     placeholder="Reporte formulario index" required>
                 <option disabled>SELECCIONA EL REPORTE A ASIGNAR</option>
                 <%
-                    if (reportesAsignados != null) {
-                        for (Reporte reporteAsignado : reportesAsignados) {
+                    if (reportesAsignar != null) {
+                        for (Reporte reporteAsignado : reportesAsignar) {
                             out.print(
                                     "<option value='" + reporteAsignado.getId() + "' >" + "REPORTE #" + reporteAsignado.getId() +"</option>"+
                                             "<option disabled > &nbsp;&nbsp;&nbsp; Nombre Reporte: " + reporteAsignado.getNombre() +"</option>"+

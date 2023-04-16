@@ -16,11 +16,13 @@ create table prueba1(
 insert into prueba1 values (1), (2), (3), (4);
 select * from prueba1;
 
+
 create table TipoUsuarios(
 	tipo varchar(30)
 );
 INSERT INTO TipoUsuarios values 
 	('EDITOR'),
+	('USUARIO'),
     ('GERENTE_MANTENIMIENTO'),
     ('GERENTE_SOPORTE'),
     ('INGENIERO_SOPORTE'),
@@ -34,6 +36,7 @@ create table Usuarios (
     nombre_usuario varchar(40) not null,
 	tipo_usuario varchar(30) not null default 'EDITOR' references TipoUsuarios(tipo)
 );
+
 INSERT INTO Usuarios (nombre_usuario, email_usuario, password_usuario, tipo_usuario) 
 	values 
     ('juanito', 'gerente@mantenimiento.com', 'contraseña', 'GERENTE_MANTENIMIENTO'),
@@ -42,7 +45,9 @@ INSERT INTO Usuarios (nombre_usuario, email_usuario, password_usuario, tipo_usua
     ('carlitos', 'ingeniero@soporte.com', 'contraseña', 'INGENIERO_SOPORTE'),
     ('brandon', 'ingeniero2@soporte.com', 'contraseña', 'INGENIERO_SOPORTE'),
     ('kikin', 'ingeniero@mantenimiento.com', 'contraseña', 'INGENIERO_MANTENIMIENTO'),
-    ('german', 'editor@editor.com', 'contraseña', 'EDITOR');
+    ('german', 'editor@editor.com', 'contraseña', 'EDITOR'),
+    ('USUARIO #1', 'usuario@correo.com', 'contraseña', 'USUARIO'),
+    ('USUARIO #2', 'usuario@usuario.com', 'contraseña', 'USUARIO');
     
 SELECT * FROM usuarios WHERE email_usuario = 'editor@editor.com' AND password_usuario = 'contraseña';
 SELECT * FROM usuarios;
@@ -53,6 +58,10 @@ create table statusReportes(
 INSERT INTO  statusReportes (status) values
 ('ABIERTO'),
 ('EN_PROCESO'),
+
+('EN_PROGRAMACION'),
+
+('PROGRAMADO'),
 ('SOLUCIONADO'),
 ('CERRADO'),
 ('ASIGNADO_MANTENIMIENTO'),

@@ -152,7 +152,7 @@
 
         <%-- ---------------------------------- SCRIPT OCULTAR CHECKBOX ----------------------------------------------------%>
 
-        <button class="w-100 btn btn-lg btn-primary" type="submit">ASignar</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Asignar</button>
 
     </form>
     <%
