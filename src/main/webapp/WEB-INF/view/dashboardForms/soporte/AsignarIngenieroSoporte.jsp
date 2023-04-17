@@ -2,11 +2,10 @@
 <%@ page
         import="com.bearbikes.maintenance_support.modelo.Reporte" %>
 <%@ page import="com.bearbikes.maintenance_support.modelo.usuarios.Usuario" %>
-<%@ page import="com.bearbikes.maintenance_support.modelo.usuarios.IngenieroSoporte" %><%-- ---------------------------------- FORMULARIO ASIGNAR INGENIEBRIO----------------------------------------------------%>
-
 <%
     List<Reporte> reportesAbiertos = (List<Reporte>) session.getAttribute("reportes-soporte-abiertos");
     System.out.println(reportesAbiertos);
+
 
     List<Usuario> ingenieroDisponibles = (List<Usuario>) session.getAttribute("ingenieros-soporte");
     System.out.println(ingenieroDisponibles);

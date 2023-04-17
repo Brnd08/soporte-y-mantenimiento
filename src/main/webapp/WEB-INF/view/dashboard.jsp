@@ -112,36 +112,36 @@
 
 
         <%-- ----------------------------------MODULO GENERAL----------------------------------------------------%>
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"
-              id="moduloGeneral">
-            <hr>
-            <h1>General</h1>
-            <hr>
-            <%-- ----------------------------------ASISTENTE MOSTRAR REPORTES----------------------------------------------------%>
-            <div id="seccion_mostrar_registros">
-                <jsp:include page="dashboardForms/asistente/MostrarRegistros.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
-        </main>
+<%--        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"--%>
+<%--              id="moduloGeneral">--%>
+<%--            <hr>--%>
+<%--            <h1>General</h1>--%>
+<%--            <hr>--%>
+<%--            &lt;%&ndash; ----------------------------------ASISTENTE MOSTRAR REPORTES--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion_mostrar_registros">--%>
+<%--                <jsp:include page="dashboardForms/asistente/MostrarRegistros.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--        </main>--%>
 
 
         <%-- ----------------------------------MODULO ASISTENTE----------------------------------------------------%>
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"
-              id="moduloAsistente" <% if (!mostrarModuloAsistente) { %>
-              style="display: none;" <% } %>>
-            <hr>
-            <h1>ASISTENTE</h1>
-            <hr>
-            <%-- ----------------------------------ASISTENTE NUEVO REPORTE----------------------------------------------------%>
-            <div id="seccion-nuevo-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.ASISTENTE)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/asistente/AñadirReporte.jsp"/>
-                <br>
-                <br>
-            </div>
-        </main>
+<%--        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"--%>
+<%--              id="moduloAsistente" <% if (!mostrarModuloAsistente) { %>--%>
+<%--              style="display: none;" <% } %>>--%>
+<%--            <hr>--%>
+<%--            <h1>ASISTENTE</h1>--%>
+<%--            <hr>--%>
+<%--            &lt;%&ndash; ----------------------------------ASISTENTE NUEVO REPORTE--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-nuevo-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.ASISTENTE)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/asistente/AñadirReporte.jsp"/>--%>
+<%--                <br>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--        </main>--%>
 
         <%-- ----------------------------------MODULO SOPORTE----------------------------------------------------%>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloSoporte" <% if (!mostrarModuloSoporte) { %>
@@ -149,30 +149,37 @@
             <hr>
             <h1>SOPORTE</h1>
             <hr>
+            <%-- ----------------------------------TABLA SOPORTE----------------------------------------------------%>
+            <div id="seccion_tabla_soporte">
+                <jsp:include page="dashboardForms/soporte/TablasSoporte.jsp"/>
+                <br>
+                <hr>
+                <br>
+            </div>
             <%-- ----------------------------------FORMULARIO ASIGNAR REPORTE----------------------------------------------------%>
-            <div id="seccion-asignar-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/soporte/AsignarIngenieroSoporte.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
-            <%-- ----------------------------------FORMULARIO SOLUCION REPORTE----------------------------------------------------%>
-            <div id="seccion-solucionar-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/soporte/ReportesAsignados.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
-            <%-- ----------------------------------DEVOLVER SOLUCION REPORTE----------------------------------------------------%>
-            <div id="seccion-devolver-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>
-                <br>
-            </div>
-            <br>
-            <br>
+<%--            <div id="seccion-asignar-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/soporte/AsignarIngenieroSoporte.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--            &lt;%&ndash; ----------------------------------FORMULARIO SOLUCION REPORTE--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-solucionar-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/soporte/ReportesAsignados.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--            &lt;%&ndash; ----------------------------------DEVOLVER SOLUCION REPORTE--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-devolver-reporte-soporte" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/soporte/Solucionados.jsp"/>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--            <br>--%>
+<%--            <br>--%>
         </main>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"
               id="moduloMantenimiento" <% if (!mostrarModuloMantenimiento) { %>
@@ -181,53 +188,53 @@
             <h1>MANTENIMIENTO</h1>
             <hr>
             <%-- ----------------------------------FORMULARIO ASIGNAR GERENTE MANTENIMIENTO----------------------------------------------------%>
-            <div id="seccion-asignar-reporte-mantenimiento-gerente" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/mantenimiento/AsignarGerenteMantenimiento.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
-            <%-- ----------------------------------FORMULARIO ASIGNAR INGENIERO MANTENIMIENTO----------------------------------------------------%>
-            <div id="seccion-asignar-reporte-mantenimiento-ingeniero" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/mantenimiento/AsignarIngenieroMantenimiento.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
-            <%-- ----------------------------------FORMUALRIO SOLUCION REPORTE MANTENIMIENTO ----------------------------------------------------%>
-            <div id="seccion-resolver-reporte-mantenimiento-asignado" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_MANTENIMIENTO)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/mantenimiento/ReportesAsignados.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
-            <%-- ----------------------------------FORMUALRIO INFORMAR REPORTE MANTENIMIENTO SOLUCIONADO a GERENTE SOPORTE----------------------------------------------------%>
-            <div id="seccion-informar-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/mantenimiento/InformarGerenteSoporteSolucionados.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
-            <%-- ----------------------------------FORMUALRIO DEVOLVER REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
-            <div id="seccion-asignar-ingeniero-soporte-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/mantenimiento/AsignarImplementado.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
-            <%-- ----------------------------------FORMUALRIO DEVOLVER REPORTE MANTENIMIENTO SOLUCIONADO----------------------------------------------------%>
-            <div id="seccion-devolver-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/mantenimiento/Solucionados.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
+<%--            <div id="seccion-asignar-reporte-mantenimiento-gerente" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/mantenimiento/AsignarGerenteMantenimiento.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--            &lt;%&ndash; ----------------------------------FORMULARIO ASIGNAR INGENIERO MANTENIMIENTO--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-asignar-reporte-mantenimiento-ingeniero" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/mantenimiento/AsignarIngenieroMantenimiento.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--            &lt;%&ndash; ----------------------------------FORMUALRIO SOLUCION REPORTE MANTENIMIENTO --------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-resolver-reporte-mantenimiento-asignado" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_MANTENIMIENTO)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/mantenimiento/ReportesAsignados.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--            &lt;%&ndash; ----------------------------------FORMUALRIO INFORMAR REPORTE MANTENIMIENTO SOLUCIONADO a GERENTE SOPORTE--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-informar-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/mantenimiento/InformarGerenteSoporteSolucionados.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--            &lt;%&ndash; ----------------------------------FORMUALRIO DEVOLVER REPORTE MANTENIMIENTO SOLUCIONADO--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-asignar-ingeniero-soporte-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/mantenimiento/AsignarImplementado.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--            &lt;%&ndash; ----------------------------------FORMUALRIO DEVOLVER REPORTE MANTENIMIENTO SOLUCIONADO--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-devolver-reporte-mantenimiento-solucionado" <% if (!modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/mantenimiento/Solucionados.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
             <br>
         </main>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="moduloFaqs" <% if (!mostrarModuloEditor) { %>
@@ -235,31 +242,31 @@
             <hr>
             <h1>FAQs</h1>
             <hr>
-            <%-- ----------------------------------DESPLEGAR FAQs REGISTRADAS----------------------------------------------------%>
-            <div id="seccion_mostrar_faqs" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/faqs/MostrarFaqs.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
-            <%-- ----------------------------------FORMULARIO AÑADIR FAQ----------------------------------------------------%>
-            <div id="seccion-añadir_faq" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
-                 style="display: none;" <% } %> >
-                <jsp:include page="dashboardForms/faqs/AñadirFaq.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
+<%--            &lt;%&ndash; ----------------------------------DESPLEGAR FAQs REGISTRADAS--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion_mostrar_faqs" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/faqs/MostrarFaqs.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
+<%--            &lt;%&ndash; ----------------------------------FORMULARIO AÑADIR FAQ--------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-añadir_faq" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>--%>
+<%--                 style="display: none;" <% } %> >--%>
+<%--                <jsp:include page="dashboardForms/faqs/AñadirFaq.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
 
-            <%-- ----------------------------------FORMUALRIO AÑADIR FAQ desde reporte cerrado ----------------------------------------------------%>
-            <div id="seccion-añadir_faq_reporte" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
-                 style="display: none;" <% } %>>
-                <jsp:include page="dashboardForms/faqs/AñadirFaqDesdeReporte.jsp"/>
-                <br>
-                <hr>
-                <br>
-            </div>
+<%--            &lt;%&ndash; ----------------------------------FORMUALRIO AÑADIR FAQ desde reporte cerrado --------------------------------------------------&ndash;%&gt;--%>
+<%--            <div id="seccion-añadir_faq_reporte" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>--%>
+<%--                 style="display: none;" <% } %>>--%>
+<%--                <jsp:include page="dashboardForms/faqs/AñadirFaqDesdeReporte.jsp"/>--%>
+<%--                <br>--%>
+<%--                <hr>--%>
+<%--                <br>--%>
+<%--            </div>--%>
             <br>
         </main>
 
