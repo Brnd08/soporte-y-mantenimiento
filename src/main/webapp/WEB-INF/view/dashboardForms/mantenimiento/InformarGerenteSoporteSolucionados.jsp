@@ -38,7 +38,7 @@
 
 
 %>
-<h2>Mantenimientos Ya Programados</h2>
+<h2>Informar Reporte Programado</h2>
 <div class="col-md-10 mx-auto col-lg-10">
     <form method="post" action="/verificar-solucionado"
           class="p-4 p-md-5 border rounded-3 bg-body-tertiary was-validated">

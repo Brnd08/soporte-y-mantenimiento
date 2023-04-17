@@ -44,7 +44,7 @@
                     "</div>";
 
 %>
-<h2>Asignar a ingeniero Soporte</h2>
+<h2>Asignar Implementado a Ing Soporte</h2>
 <div class="col-md-10 mx-auto col-lg-10">
     <form method="post" action="/asignar-reporte-implementado"
           class="p-4 p-md-5 border rounded-3 bg-body-tertiary was-validated">

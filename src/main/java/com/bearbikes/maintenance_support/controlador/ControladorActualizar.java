@@ -97,6 +97,124 @@ public class ControladorActualizar {
     }
 
 
+    @GetMapping("/mantenimiento/{seccion}/{idReporte}")
+    public String regresarActualizadoMantenimiento(
+            @PathVariable String seccion, @PathVariable int idReporte,
+            HttpServletResponse response, HttpSession session) {
+        System.out.println("Actualizar mantenimiento seccion ==>" + seccion + "reporte Modificar ==> " + idReporte);
+        cargarVariablesSession(session);
+
+        switch (seccion) {
+            case "asignarGerenteMantenimiento" -> {
+                List<Reporte> reportesAbiertos = (List<Reporte>) session.getAttribute("reportes-mantenimiento-abiertos");
+                session.removeAttribute("reportes-soporte-abiertos");
+                Reporte recuperado = null;
+                for (Reporte reporteAbierto : reportesAbiertos)
+                    if (reporteAbierto.getId() == idReporte) {
+                        recuperado = reporteAbierto;
+                        break;
+                    }
+
+                if (recuperado != null)
+                    session.setAttribute("reportes-soporte-abiertos", List.of(recuperado));
+                else
+                    session.setAttribute("reportes-soporte-abiertos", reportesAbiertos);
+
+                return "dashboardForms/mantenimiento/AsignarGerenteMantenimiento";
+            }
+            case "asignarIngenieroMantenimiento" -> {
+                List<Reporte> reportesProceso = (List<Reporte>) session.getAttribute("reportes-mantenimiento-en-proceso");
+                session.removeAttribute("reportes-mantenimiento-en-proceso");
+                Reporte recuperado = null;
+                for (Reporte reporteProceso : reportesProceso)
+                    if (reporteProceso.getId() == idReporte) {
+                        recuperado = reporteProceso;
+                        break;
+                    }
+
+                if (recuperado != null)
+                    session.setAttribute("reportes-mantenimiento-en-proceso", List.of(recuperado));
+                else
+                    session.setAttribute("reportes-mantenimiento-en-proceso", reportesProceso);
+
+                return "dashboardForms/mantenimiento/AsignarIngenieroMantenimiento";
+            }
+            case "resolverReporte" -> {
+                List<Reporte> reportesAsignados = (List<Reporte>) session.getAttribute("reportes-mantenimiento-asignados");
+                session.removeAttribute("reportes-mantenimiento-asignados");
+                Reporte recuperado = null;
+                for (Reporte reporteAsignado : reportesAsignados)
+                    if (reporteAsignado.getId() == idReporte) {
+                        recuperado = reporteAsignado;
+                        break;
+                    }
+                if (recuperado != null)
+                    session.setAttribute("reportes-mantenimiento-asignados", List.of(recuperado));
+                else
+                    session.setAttribute("reportes-mantenimiento-asignados", reportesAsignados);
+                return "dashboardForms/mantenimiento/ReportesAsignados";
+            }
+
+            case "informarProgramado" -> {
+
+                List<Reporte> reportesSolucionados = (List<Reporte>) session.getAttribute("reportes-solucionados-mantenimiento");
+                session.removeAttribute("reportes-solucionados-mantenimiento");
+                Reporte recuperado = null;
+                for (Reporte reporteProgramado : reportesSolucionados)
+                    if (reporteProgramado.getId() == idReporte) {
+                        recuperado = reporteProgramado;
+                        break;
+                    }
+                if (recuperado != null)
+                    session.setAttribute("reportes-solucionados-mantenimiento", List.of(recuperado));
+                else
+                    session.setAttribute("reportes-solucionados-mantenimiento", reportesSolucionados);
+
+                return "dashboardForms/mantenimiento/InformarGerenteSoporteSolucionados";
+            }
+
+            case "asignarImplementado" -> {
+
+                List<Reporte> reportesSolucionados = (List<Reporte>) session.getAttribute("reportes-mantenimiento-implementados");
+                session.removeAttribute("reportes-mantenimiento-implementados");
+                Reporte recuperado = null;
+                for (Reporte reporteImplementado : reportesSolucionados)
+                    if (reporteImplementado.getId() == idReporte) {
+                        recuperado = reporteImplementado;
+                        break;
+                    }
+                if (recuperado != null)
+                    session.setAttribute("reportes-mantenimiento-implementados", List.of(recuperado));
+                else
+                    session.setAttribute("reportes-mantenimiento-implementados", reportesSolucionados);
+
+                return "dashboardForms/mantenimiento/AsignarImplementado";
+            }
+
+
+            case "devolverImplementado" -> {
+
+                List<Reporte> reportesSolucionados = (List<Reporte>) session.getAttribute("reportes-verificados-mantenimiento");
+                session.removeAttribute("reportes-verificados-mantenimiento");
+                Reporte recuperado = null;
+                for (Reporte reporteResuelto : reportesSolucionados)
+                    if (reporteResuelto.getId() == idReporte) {
+                        recuperado = reporteResuelto;
+                        break;
+                    }
+                if (recuperado != null)
+                    session.setAttribute("reportes-verificados-mantenimiento", List.of(recuperado));
+                else
+                    session.setAttribute("reportes-verificados-mantenimiento", reportesSolucionados);
+
+                return "dashboardForms/mantenimiento/Solucionados";
+            }
+        }
+        response.setStatus(HttpServletResponse.SC_OK);
+        return null;
+    }
+
+
     @GetMapping("/editor/{idReporte}")
     public String regresarActualizadoEditor(@PathVariable int idReporte, HttpServletResponse response, HttpSession session) {
         System.out.println("Actualizar editor reporte añadir ==> " + idReporte);

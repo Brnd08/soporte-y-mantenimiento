@@ -187,6 +187,13 @@
             <hr>
             <h1>MANTENIMIENTO</h1>
             <hr>
+            <%-- ----------------------------------TABLA SOPORTE----------------------------------------------------%>
+            <div id="seccion_tabla_mantenimiento">
+                <jsp:include page="dashboardForms/mantenimiento/TablasMantenimiento.jsp"/>
+                <br>
+                <hr>
+                <br>
+            </div>
             <%-- ----------------------------------FORMULARIO ASIGNAR GERENTE MANTENIMIENTO----------------------------------------------------%>
 <%--            <div id="seccion-asignar-reporte-mantenimiento-gerente" <% if (!modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE)) { %>--%>
 <%--                 style="display: none;" <% } %>>--%>
@@ -242,14 +249,15 @@
             <hr>
             <h1>FAQs</h1>
             <hr>
-<%--            &lt;%&ndash; ----------------------------------DESPLEGAR FAQs REGISTRADAS--------------------------------------------------&ndash;%&gt;--%>
-<%--            <div id="seccion_mostrar_faqs" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>--%>
-<%--                 style="display: none;" <% } %>>--%>
-<%--                <jsp:include page="dashboardForms/faqs/MostrarFaqs.jsp"/>--%>
-<%--                <br>--%>
-<%--                <hr>--%>
-<%--                <br>--%>
-<%--            </div>--%>
+            <%-- ----------------------------------DESPLEGAR FAQs REGISTRADAS----------------------------------------------------%>
+            <div id="seccion_tabla_mantenimiento" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>
+                 style="display: none;" <% } %>>
+
+                <jsp:include page="dashboardForms/faqs/MostrarFaqs.jsp"/>
+                <br>
+                <hr>
+                <br>
+            </div>
 <%--            &lt;%&ndash; ----------------------------------FORMULARIO AÑADIR FAQ--------------------------------------------------&ndash;%&gt;--%>
 <%--            <div id="seccion-añadir_faq" <% if (!modulos.contains(Usuario.TipoUsuario.EDITOR)) { %>--%>
 <%--                 style="display: none;" <% } %> >--%>
