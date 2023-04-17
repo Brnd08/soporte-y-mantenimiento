@@ -32,11 +32,11 @@
                 <th scope="col">FECHA</th>
                 <th scope="col">TIPO</th>
                 <th scope="col">ENVIADO</th>
-                <th scope="col">GERENTE<br>SOPORTE</th>
-                <th scope="col">GERENTE<br>MANTENIMIENTO</th>
-                <th scope="col">INGENIERO<br>MANTENIMIENTO</th>
-                <th scope="col">INGENIERO<br>SOPORTE</th>
-                <th scope="col">EDITOR</th>
+                <th scope="col" style="display: <%=(modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE))? "inherited;" : "none;"%>">GERENTE<br>SOPORTE</th>
+                <th scope="col" style="display: <%=(modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO))? "inherited;" : "none;"%>">GERENTE<br>MANTENIMIENTO</th>
+                <th scope="col" style="display: <%=(modulos.contains(Usuario.TipoUsuario.INGENIERO_MANTENIMIENTO))? "inherited;" : "none;"%>">INGENIERO<br>MANTENIMIENTO</th>
+                <th scope="col" style="display: <%=(modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE))? "inherited;" : "none;"%>">INGENIERO<br>SOPORTE</th>
+                <th scope="col" style="display: <%=(modulos.contains(Usuario.TipoUsuario.EDITOR))? "inherited;" : "none;"%>">EDITOR</th>
             </tr>
             </thead>
             <tbody>
@@ -53,26 +53,26 @@
                                     "<td>" + reporteRegistrado.getFechaReporte() + "</td>" +
                                     "<td>" + reporteRegistrado.getTipo() + "</td>" +
                                     "<td>" + reporteRegistrado.getEnviado() + "</td>" +
-                                    "<td>" + // GERENTE SOPORTE
+                                    "<td style = 'display: "+ ((modulos.contains(Usuario.TipoUsuario.GERENTE_SOPORTE))? "inherited;" : "none;") +"'>" + // GERENTE SOPORTE
                                         "<button type='submit' style='display: " + (reporteRegistrado.getStatus().equals(Reporte.StatusReporte.ABIERTO) ? "block;" : "none;") + "'  class='botonAsignarGerente_gerenteSoporte w-100 btn btn-lg btn-primary' value ='" + reporteRegistrado.getId() + "'>Asignar Gerente</button>" +
                                         "<button type='submit' style='display: " + (reporteRegistrado.getStatus().equals(Reporte.StatusReporte.IMPLEMENTADO_MANTENIMIENTO) ? "block;" : "none;") + "'  class='botonAsignarImplementado_gerenteSoporte w-100 btn btn-lg btn-primary' value ='" + reporteRegistrado.getId() + "'>Asignar Reporte Implementado</button>" +
                                     "</td>" +
-                                    "<td>" + //GERENTE MANTENIMIENTO
+                                    "<td style = 'display: "+ ((modulos.contains(Usuario.TipoUsuario.GERENTE_MANTENIMIENTO))? "inherited;" : "none;") + "'>" + //GERENTE MANTENIMIENTO
                                         "<button type='submit' style='display: " + (reporteRegistrado.getStatus().equals(Reporte.StatusReporte.EN_PROCESO) ? "block;" : "none;") + "'  class='botonAsignarIngenieroMantenimiento_gerenteSoporte w-100 btn btn-lg btn-primary' value ='" + reporteRegistrado.getId() + "'>Asignar Ingeniero Mantenimiento</button>" +
                                         "<button type='submit' style='display: " + (reporteRegistrado.getStatus().equals(Reporte.StatusReporte.PROGRAMADO) ? "block;" : "none;") + "'  class='botonInformarIngeniero_gerenteSoporte w-100 btn btn-lg btn-primary' value ='" + reporteRegistrado.getId() + "'>Reportar Programado</button>" +
                                     "</td>" +
-                                    "<td>" + // INGENIERO MANTENIMIENTO
+                                    "<td style = 'display: "+ ((modulos.contains(Usuario.TipoUsuario.INGENIERO_MANTENIMIENTO))? "inherited;" : "none;") +"'>" + // INGENIERO MANTENIMIENTO
                                         "<button type='submit' style='display: " +
                                         (reporteRegistrado.getStatus().equals(Reporte.StatusReporte.EN_PROGRAMACIÓN) && reporteRegistrado.getTipo().equals(Reporte.TipoReporte.MANTENIMIENTO) ? "block;" : "none;") +
                                         "'  class='botonResolverReporte_ingMantenimiento w-100 btn btn-lg btn-primary' value ='" + reporteRegistrado.getId() + "'>Resolver Reporte</button>" +
 
                                     "</td>" +
-                                    "<td>" + // INGENIERO SOPORTE
+                                    "<td style = 'display: "+ ((modulos.contains(Usuario.TipoUsuario.INGENIERO_SOPORTE))? "inherited;" : "none;") +"'>" + // INGENIERO SOPORTE
                                         "<button type='submit' style='display: " +
                                         (reporteRegistrado.getStatus().equals(Reporte.StatusReporte.VERIFICADO) && reporteRegistrado.getTipo().equals(Reporte.TipoReporte.MANTENIMIENTO) ? "block;" : "none;") +
                                         "'  class='botonDevolverReporteMantenimiento_ingSoporte w-100 btn btn-lg btn-primary' value ='" + reporteRegistrado.getId() + "'>Devolver Reporte</button>" +
                                     "</td>" +
-                                    "<td>" +
+                                    "<td style = 'display: "+ ((modulos.contains(Usuario.TipoUsuario.EDITOR))? "inherited;" : "none;") +"'>" +
                                         "<button type='submit' style='display: " + (reporteRegistrado.getStatus().equals(Reporte.StatusReporte.CERRADO) ? "block;" : "none;") + "'  class='botonAñadirComoFaqSoporte w-100 btn btn-lg btn-primary' value ='" + reporteRegistrado.getId() + "'>Publicar</button>" +
                                     "</td>" +
                                     "</tr>"
