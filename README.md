@@ -1,6 +1,8 @@
-# Modulo Soporte y Mantenimiento
+# Modulo Soporte y Mantenimiento 
 
-  Herramienta de soporte y mantenimiento que sigue la norma ISO 14764 para el mantenimiento de software. Este proyecto fue desarrollado usando Spring Boot y JSP. Mysql como base de datos, se ejecuta en un servidor tomcat enbebido
+Herramienta de soporte y mantenimiento que sigue la norma ISO 14764 para el mantenimiento de software. Este proyecto fue desarrollado usando Spring Boot y JSP. Mysql como base de datos, se ejecuta en un servidor tomcat enbebido.
+
+[Video de Funcionamiento en Youtube](https://www.youtube.com/watch?v=WlmY6EljMEs) 
 
   
 ## Lógica de funcionameinto resumida
@@ -28,3 +30,6 @@ mvn spring-boot:run
 3. Abre el navegador en la direccion `localhost:9010`
 4. Inicia sesión con el usuario correspondiente según la accion que desees realizar.
 El super usuario es: usuario-> gerente@soporte.com, contraseña -> contraseña . Con el puedes realizar todas las acciones de los demás tipos de usuarios
+
+
+
